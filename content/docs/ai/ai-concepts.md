@@ -5,37 +5,63 @@ enableTableOfContents: true
 updatedOn: '2023-10-07T10:43:33.357Z'
 ---
 
-Embeddings are an essential component in building AI applications. Ths topic describes embeddings and how they are used in building AI and LLM applications.
+Vector embeddings are an essential component of Generative AI applications. Embeddings encapsulate the meaning of text, enabling AI models to understand which texts are semantically similar. The process of extracting the most similar texts from your database based on a user's request is known as nearest neighbor or vector similarity search.
+
+## pgvector
+
+`pgvector` is the extension that enables vector similarity search in Postgres. The `pgvector extension` supports two index types:
+
+- **IVFFlat**, which divides vectors into lists, and then searches a subset of those lists that are closest to the query vector.
+- **Hierarchical Navigable Small Worlds (HNSW)**, which is a graph-based indexes, which makes vector search queries significantly faster and your AI applications more responsive. 
+
+But what does this mean for developers and Large Language Model (LLM) applications?
+
+In this topic, we'll cover the following:
+
+[What are embeddings?](#what-are-embeddings)
+[What is vector similarity search?](#what-is-vector-similarity-search)
+Why do we use vector search for LLM apps
+How to optimize vector search
 
 ## What are embeddings?
 
-When working with unstructured data, a common objective is to transform it into a more structured format that is easier to analyze and retrieve. This transformation can be achieved through the use of 'embeddings', which are vectors containing an array of floating-point numbers that represent the features or dimensions of the data. For example, a sentence like "The cow jumped over the moon" could be represented by an embedding that looks like this: [0.5, 0.3, 0.1].
+In simple terms, a vector is a list of numbers that represent a point in space. For example, in 2D space, a vector [2,3] represents a point that’s 2 units along the x-axis and 3 units along the y-axis. In 3D space, a vector [2,3,4] adds an additional dimension, the z-axis. The beauty of vectors is that they can have many more dimensions than we can visualize. OpenAI's `text-embedding-ada-002 model`, for example, generates embeddings for 1536 dimensions.
 
-The advantage of embeddings is that they allow us to measure the similarity between different pieces of text. By calculating the distance between two embeddings, we can assess their relatedness - the smaller the distance, the greater the similarity, and vice versa. This quality is particularly useful as it enables embeddings to capture the underlying meaning of the text.
+The word “embedding” might sound complex, but it’s just a fancy way of saying “representation.” When we say “vector embeddings,” we’re referring to representing complex data, like words or images, as vectors.
 
-Take the following three sentences, for example:
+For example, consider the word “cat.” Instead of thinking about it as a string of letters, we can represent it as a point in a multi-dimensional space using a vector. Something like this:
 
-- Sentence 1: "The cow jumped over the moon."
-- Sentence 2: "The bovine leapt above the celestial body."
-- Sentence 3: "I enjoy eating pancakes."
+```text
+Cat: [0.8108,0.6671,0.5565,0.5449,0.4466]
+```
 
-You can determine the most similar sentences by following these steps:
+This representation can capture the essence or meaning of the word "cat" in relation to other words. Words with similar meanings would be closer in this dimensionnal space, while different meanings would be further way.
 
-1. Generate embeddings for each sentence. For illustrative purposes, assume these values represent actual embeddings:
+## Why use Vector Embeddings?
 
-    - Embedding for sentence 1 → [0.5, 0.3, 0.1]
-    - Embedding for sentence 2 → [0.6, 0.29, 0.12]
-    - Embedding for sentence 3 → [0.1, -0.2, 0.4]
+Vector embeddings allow us to convert diverse forms of data into a common format (vectors) that LLMs can understand and process. By doing so, we can perform mathematical operations on them, like calculating the distance between two vectors, which can tell us how similar or different two pieces of data are.
 
-2. Compute the distance between all pairs of embeddings (1 & 2, 2 & 3, and 1 & 3).
+## What is vector similarity search?
 
-3. Identify the pair of embeddings with the shortest distance between them.
+The method of transforming data into embeddings and computing similarities between one or more items is referred to as vector search or similarity search.
 
-When we apply this process, it is likely that sentences 1 and 2, both of which involve bounding cattle, would emerge as the most related according to a distance calculation.
+Imagine you have a specific song stuck in your head, but you don’t know the title. Instead of listening to each song in a vast playlist, you’d want to find the one that closely matches the  lyrics you remember. In the world of vectors, this is called “similarity search.”
 
-## Vector similarity search
+When we represent data as vectors, we can measure how close or far apart these vectors are. Let’s assume we have the words apple, cat and dog represented by 5-dimension vector embeddings.
 
-The method of transforming data into embeddings and computing similarities between one or more items is referred to as vector search or similarity search. This process has a wide range of applications, including but not limited to:
+Apple: [−0.7888,−0.7361,−0.6208,−0.5134,−0.4044]
+Cat: [0.8108,0.6671,0.5565,0.5449,0.4466]
+Dog: [0.8308,0.6805,0.5598,0.5184,0.3940]
+
+Now, we want to know which word is the closest semantically to the word "orange".
+
+Orange: [−0.7715,−0.7300,−0.5986,−0.4908,−0.4454]
+
+The "orange" vector is called the "query vector". We know that orange is a fruit, so logically it can be grouped with the word "apple". Let’s visualize our vectors on a two-dimensional plane. We can reduce the 5-dimensional vectors to 2-dimensional ones for visualization through [Principle Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis).
+
+![AI vector dimension graph](/docs/ai/ai_vector_dimension_graph)
+
+This process has a wide range of applications, including but not limited to:
 
 - **Information retrieval:** By representing user queries as vectors, we can perform more accurate searches based on the meaning behind the queries, allowing us to retrieve more relevant information.
 - **Natural language processing:** Embeddings capture the essence of the text, making them excellent tools for tasks such as text classification and sentiment analysis.
