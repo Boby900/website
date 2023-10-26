@@ -35,7 +35,7 @@ For example, consider the word “cat.” Instead of thinking about it as a stri
 Cat: [0.8108,0.6671,0.5565,0.5449,0.4466]
 ```
 
-This representation can capture the essence or meaning of the word "cat" in relation to other words. Words with similar meanings would be closer in this dimensionnal space, while different meanings would be further way.
+This representation can capture the essence or meaning of the word "cat" in relation to other words. Words with similar meanings would be closer in this dimensional space, while different meanings would be further way.
 
 ## Why use Vector Embeddings?
 
