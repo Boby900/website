@@ -2,7 +2,7 @@
 title: AI Concepts
 subtitle: Learn about embeddings and how they are used to build AI and LLM applications
 enableTableOfContents: true
-updatedOn: '2023-10-07T10:43:33.357Z'
+updatedOn: '2023-11-08T20:24:09.806Z'
 ---
 
 Vector embeddings are an essential component of Generative AI applications. Embeddings encapsulate the meaning of text, enabling AI models to understand which texts are semantically similar. The process of extracting the most similar texts from your database based on a user's request is known as nearest neighbor or vector similarity search.
