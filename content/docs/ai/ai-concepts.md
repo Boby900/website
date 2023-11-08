@@ -63,15 +63,118 @@ The "orange" vector is called the "query vector". We know that orange is a fruit
 
 You can se in the diagram above that there are two clusters: animals and fruit. The closer two vectors are, the more similar the data they represent is. So, to perform a similarity search, you need to calculate the distance between the query vector (orange) and all of the other vectors (cat, dog, apple) and find out which one is the smallest. Next, we’ll see how to calculate the distance between two vectors.
 
-### Distance metrics
+## Distance metrics
 
-Vector similarity search computes similarities (the distance) between data points. Calculating how 'far apart' data points are helps us understand the relationship between them. Distance can be computed in different ways using different metrics. Some popular distance metrics include:
+The concept of “distance” between vectors is pivotal in similarity search. There are various ways to measure distance, the most common being Euclidean distance. However, cosine similarity often proves more effective for high-dimensional data (like text or images).
 
-- Euclidean (L2): Often referred to as the "ordinary" distance you'd measure with a ruler.
-- Manhattan (L1): Also known as "taxicab" or "city block" distance.
-- Cosine: This calculates the cosine of the angle between two vectors.
+### Eucledian or L2 distance
 
-Different distance metrics can be more appropriate for different tasks, depending on the nature of the data and the specific relationships you're interested in. For instance, cosine similarity is often used in text analysis.
+Euclidean distance, also known as L2 distance, is a measure of the straight-line distance between two points in Euclidean space. For two vectors A and B of length n, the L2 distance is calculated as follows:
+
+![L2 distance formula](/docs/ai/l2_distance)
+
+For example, let’s say we have two vectors `A=[1,2]` and `B=[2,2]`.
+
+L2 Distance would be calculated as follows: `D(A,B)=(1-2)2+(2-2)2​=1`
+
+For the L2 distance metric, the smaller the distance, the more similar A and B are. L2 performs well in use cases such as image recognition tasks where pixel-by-pixel differences are significant. However, unlike the cosine distance function, L2 distances are always positive, which makes them less suitable for understanding dissimilarities.
+
+Here is what the distances would look like using L2:
+
+```text
+           |     Apple     |    Orange    |      Cat      |      Dog      |
+---------------------------------------------------------------------------
+Apple      |      0.0      |   0.054965   |   2.785305    |   2.779520    |
+Orange     |   0.054965    |      0.0     |   2.767337    |   2.760769    |
+Cat        |   2.785305    |   2.767337   |      0.0      |   0.063714    |
+Dog        |   2.779520    |   2.760769   |   0.063714    |      0.0      |
+```
+
+### Cosine distance
+
+Cosine distance is a measure of similarity derived from the cosine similarity metric. It’s often used for document retrieval use cases where the angle between vectors identifies the similarity in content.
+
+While cosine similarity measures the cosine of the angle between two vectors, cosine distance is defined as the complement to cosine similarity, and is calculated as:
+
+![cosine distance formula](/docs/ai/cosine_distance)
+
+Cosine distance ranges from 0 to 2, where 0 indicates that the vectors are identical, and 2 indicates that they are diametrically opposed.
+
+For example, for the same A=[1,2] and B=[2,2].
+
+1. Calculate the Dot Product: `A⋅B=(1×2)+(2×2)=2+4=6`
+
+2. Calculate the Magnitude: `A= 12+22​ =5​ , B= 22+22​ =8`​
+
+3. Calculate the Cosine Distance: `D(A,B)=1− 65 8​ 0.0513`  
+
+The matrix below shows the distances for our vectors:
+
+```text
+           |     Apple     |    Orange    |      Cat      |      Dog      |
+---------------------------------------------------------------------------
+Apple      |      0.0      |   0.000689   |   1.997025    |   1.997994    |
+Orange     |   0.000689    |      0.0     |   1.997349    |   1.997192    |
+Cat        |   1.997025    |   1.997349   |      0.0      |   0.001058    |
+Dog        |   1.997994    |   1.997192   |   0.001058    |      0.0      |
+```
+
+## Vector search with pgvector
+
+pgvector is the Postgres extension for vector similarity search. Let’s see how to execute our previous example using pgvector:
+
+```sql
+CREATE EXTENSION vector;
+-- Creating the table
+CREATE TABLE words (
+    word VARCHAR(50) PRIMARY KEY,
+    embedding VECTOR(5)
+);
+
+-- Inserting the vectors
+INSERT INTO words (word, embedding) VALUES
+('Apple', '[-0.7888, -0.7361, -0.6208, -0.5134, -0.4044]'),
+('Cat', '[0.8108, 0.6671, 0.5565, 0.5449, 0.4466]'),
+('Dog', '[0.8308, 0.6805, 0.5598, 0.5184, 0.3940]');
+```
+
+Here is an example of how to search vectors that are the closest to the word orange:
+
+```sql
+SELECT word FROM words
+ORDER BY embedding <=> '[-0.7715, -0.7300, -0.5986, -0.4908, -0.4454]
+```
+
+Output:
+
+```sql
+word  
+-------
+ Apple
+ Dog
+ Cat
+(3 rows)
+```
+
+The above query returns the list of `word` in the `words` table ordered by distance ascending order. The `<=>` operator is used for Cosine distances. The `pgvector` supports many distance functions, including Cosine, L2 and Inner Product.
+
+The above query returns all rows in the table `words`. Typically in real-world applications, we want to return the k most similar vectors.
+
+```sql
+SELECT word FROM words
+ORDER BY embedding <=> '[-0.7715, -0.7300, -0.5986, -0.4908, -0.4454] LIMIT 1;
+```
+
+Output:
+
+```sql
+word  
+-------
+ Apple
+(1 row)
+```
+
+The query above performs a sequential scan and compares all vectors with the query vector and returns id’s for the closest vector to our query vector. This method can be computationally costly with large datasets. In the next section, we will see how to optimize the vector similarity search with indexes.
 
 ## Generating embeddings
 
