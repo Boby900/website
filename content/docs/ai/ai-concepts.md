@@ -210,11 +210,66 @@ The m parameter dictates how many connections (or "edges") each data point (or "
 
 Increasing m means that each point will be connected to more neighbors and would make the graph denser, which can speed up search queries at the cost of longer index build times and higher memory usage.
 
-ef_construction - Candidate list size during index build
+### ef_construction - Candidate list size during index build
 
 The ef_construction parameter controls the size of the candidate list used during the index building process. This list temporarily holds the closest candidates found so far as the algorithm traverses the graph. Once the traversal is done for a particular point, the list is sorted, and the top m closest points are retained as neighbors.
 
 A higher ef_construction value allows the algorithm to consider more candidates, potentially improving the quality of the index. However, it also slows down the index building process, as more candidates mean more distance calculations.
+
+![HNSW index image](/docs/ai/hnsw_ef_construction.png)
+
+#### Choosing the right values
+
+In most cases, you'll need to experiment to find the best values for your specific use case. However, general guidelines suggest:
+
+- Smaller `m` values are better for lower-dimensional data or when you require lower recall.
+
+- Larger `m` values are useful for higher-dimensional data or when high recall is important.
+
+- Increasing `ef_construction` beyond a certain point offers diminishing returns on index quality but will continue to slow down index construction.
+
+By understanding and carefully choosing these parameters, you can effectively balance the trade-offs between index quality, query speed, and resource usage.
+
+#### Vector similarity search with HNSW
+
+SET hnsw.ef_search = 10;
+
+SELECT word FROM words
+ORDER BY embedding <=> '[-0.7715, -0.7300, -0.5986, -0.4908, -0.4454]' LIMIT 1;
+
+The above query sets ef_search parameter and returns the query vectors k approximate nearest neighbors.
+
+#### ef_search - Candidate list size during search
+
+HNSW creates a hierarchical graph where each node is a vector, and edges connect nearby (similar) nodes. When searching for the nearest neighbors of a query vector, the algorithm navigates this graph. The parameter `ef_search` controls the size of the dynamic list used during the search process.
+
+When you set `ef_search`, you're specifying the size of the "beam" or the "priority queue" used during the search. It determines how many candidate vectors the algorithm will consider at each step while navigating the graph.
+
+Trade-offs:
+
+Higher ef_search: Increases the search accuracy because the algorithm considers more candidate nodes. However, this also increases the search time since more nodes are being evaluated.
+
+Lower ef_search: Speeds up the search but might decrease accuracy. The algorithm might miss some closer nodes because it's considering fewer candidates.
+
+#### HNSW pros and cons
+
+While speed with a high level of accuracy are the main advantage of HNSW, which helps Postgres-powered LLM applications scale to millions of users, the index is resource intensive. You would typically need more RAM and configure the `maintenance_work_mem` for larger datasets.
+
+Advantages
+
+- Speed: HNSW is significantly faster than traditional methods like IVF.
+- High Recall: HNSW provides a high recall rate, meaning it's more likely to return the most relevant results.
+- Scalability: HNSW scales well with the size of the dataset.
+
+Disadvantages
+
+- Approximate Results: The algorithm provides approximate, not exact, results.
+- Resource-Intensive Indexing: Creating an HNSW index can be resource-intensive, especially for large datasets.
+- Complexity: The algorithm's parameters can be tricky to tune for optimal performance.
+
+#### Conclusion
+
+Vectors have revolutionized how we handle and interpret data in AI. With pgvector and its integration of the HNSW algorithm in Postgres, developers now have an efficient tool to make AI applications even more responsive and accurate. While HNSW offers impressive speed, it's essential to understand its trade-offs, especially when dealing with extensive datasets.
 
 ## Generating embeddings
 
