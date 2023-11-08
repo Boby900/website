@@ -71,7 +71,7 @@ The concept of “distance” between vectors is pivotal in similarity search. T
 
 Euclidean distance, also known as L2 distance, is a measure of the straight-line distance between two points in Euclidean space. For two vectors A and B of length n, the L2 distance is calculated as follows:
 
-![L2 distance formula](/docs/ai/l2_distance)
+![L2 distance formula](/docs/ai/l2_distance.png)
 
 For example, let’s say we have two vectors `A=[1,2]` and `B=[2,2]`.
 
@@ -96,7 +96,7 @@ Cosine distance is a measure of similarity derived from the cosine similarity me
 
 While cosine similarity measures the cosine of the angle between two vectors, cosine distance is defined as the complement to cosine similarity, and is calculated as:
 
-![cosine distance formula](/docs/ai/cosine_distance)
+![cosine distance formula](/docs/ai/cosine_distanc.png)
 
 Cosine distance ranges from 0 to 2, where 0 indicates that the vectors are identical, and 2 indicates that they are diametrically opposed.
 
@@ -175,6 +175,46 @@ word  
 ```
 
 The query above performs a sequential scan and compares all vectors with the query vector and returns id’s for the closest vector to our query vector. This method can be computationally costly with large datasets. In the next section, we will see how to optimize the vector similarity search with indexes.
+
+## Optimizing vector similarity search
+
+In Postgres, an index sorts the table for efficient search. By default, `pgvector` performs a sequential scan and returns the vectors with 100% accuracy. We call this an exact search. This accuracy often comes at the expense of speed. Using approximate nearest neighbour (ANN) index search instead of exact search offers a significant advantage in terms of computational efficiency, especially at scale.
+
+In an exact search, every query involves scanning the entire dataset to find the closest neighbors, leading to a time complexity of O(N), where N is the size of the dataset. This doesn't scale well for large datasets and can be computationally expensive.
+
+On the other hand, ANN algorithms like HNSW enable much faster queries by approximating the nearest neighbors. They do this by exploring a subset of the dataset, thereby reducing the computational burden.
+
+While this comes at the cost of a slight reduction in the accuracy of the results, the trade-off is often acceptable for many real-world applications where speed is crucial. By enabling faster and more efficient queries, ANN search methods make it feasible to work with large-scale, high-dimensional data in real-time scenarios.
+
+## HNSW for ANN search
+
+HNSW is an ANN index. Its graph-based nature is designed for efficient search, especially at larger scales. HNSW creates a multi-layered graph, where each layer represents a subset of the data, to quickly traverse these layers to find approximate nearest neighbors.
+
+![HNSW index image](/docs/ai/hnsw.png)
+
+In each of the HNSW index layers, the vectors are sorted according to the distance function. The pgvector extension supports multiple distance functions. Next, we discuss the differences between those distances and which one you should choose for your application.
+
+Now that we understand how vectors are sorted, let’s explore how HNSW connects vectors to each other to optimize for search.
+
+Here is how you would create an HNSW index in Postgres:
+
+CREATE INDEX ON words USING hnsw (embedding vector_cosine_ops) WITH (m = 10, ef_construction = 64);
+
+The index build query above creates an HNSW index on the `vectors` column of `documents` table, using the cosine distance and the specified parameters m and ef_construction.
+
+When you create an HNSW index, you'll encounter two important parameters: `m` and `ef_construction`. These parameters control the index's structure and impact both its build time and query performance.
+
+m - The degree of the graph
+
+The m parameter dictates how many connections (or "edges") each data point (or "vertex") has to its neighboring data points in the graph. For example, if m = 10, each data point in the graph would be connected to its four nearest neighbors. 
+
+Increasing m means that each point will be connected to more neighbors and would make the graph denser, which can speed up search queries at the cost of longer index build times and higher memory usage.
+
+ef_construction - Candidate list size during index build
+
+The ef_construction parameter controls the size of the candidate list used during the index building process. This list temporarily holds the closest candidates found so far as the algorithm traverses the graph. Once the traversal is done for a particular point, the list is sorted, and the top m closest points are retained as neighbors.
+
+A higher ef_construction value allows the algorithm to consider more candidates, potentially improving the quality of the index. However, it also slows down the index building process, as more candidates mean more distance calculations.
 
 ## Generating embeddings
 
