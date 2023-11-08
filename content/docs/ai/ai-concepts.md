@@ -9,25 +9,25 @@ Vector embeddings are an essential component of Generative AI applications. Embe
 
 ## pgvector
 
-`pgvector` is the extension that enables vector similarity search in Postgres. The `pgvector extension` supports two index types:
+The `pgvector` extension enables vector similarity search in Postgres. It supports two index types:
 
-- **IVFFlat**, which divides vectors into lists, and then searches a subset of those lists that are closest to the query vector.
-- **Hierarchical Navigable Small Worlds (HNSW)**, which is a graph-based indexes, which makes vector search queries significantly faster and your AI applications more responsive. 
+- **IVFFlat**: Divides vectors into lists, and then searches a subset of those lists that are closest to the query vector.
+- **Hierarchical Navigable Small World (HNSW)**: A graph-based index that makes vector search queries significantly faster.
 
 But what does this mean for developers and Large Language Model (LLM) applications?
 
 In this topic, we'll cover the following:
 
-[What are embeddings?](#what-are-embeddings)
-[What is vector similarity search?](#what-is-vector-similarity-search)
-Why do we use vector search for LLM apps
-How to optimize vector search
+- [What are embeddings?](#what-are-embeddings)
+- [What is vector similarity search?](#what-is-vector-similarity-search)
+- Why do we use vector search for LLM apps
+- How to optimize vector search
 
 ## What are embeddings?
 
 In simple terms, a vector is a list of numbers that represent a point in space. For example, in 2D space, a vector [2,3] represents a point that’s 2 units along the x-axis and 3 units along the y-axis. In 3D space, a vector [2,3,4] adds an additional dimension, the z-axis. The beauty of vectors is that they can have many more dimensions than we can visualize. OpenAI's `text-embedding-ada-002 model`, for example, generates embeddings for 1536 dimensions.
 
-The word “embedding” might sound complex, but it’s just a fancy way of saying “representation.” When we say “vector embeddings,” we’re referring to representing complex data, like words or images, as vectors.
+The word “embedding” might sound complex, but it’s just a fancy way of saying “representation.” When we say “vector embedding,” we’re referring to a representation of complex data, like words or images, as vectors.
 
 For example, consider the word “cat.” Instead of thinking about it as a string of letters, we can represent it as a point in a multi-dimensional space using a vector. Something like this:
 
@@ -35,7 +35,7 @@ For example, consider the word “cat.” Instead of thinking about it as a stri
 Cat: [0.8108,0.6671,0.5565,0.5449,0.4466]
 ```
 
-This representation can capture the essence or meaning of the word "cat" in relation to other words. Words with similar meanings would be closer in this dimensional space, while different meanings would be further way.
+This representation can capture the essence or meaning of the word "cat" in relation to other words. Words with similar meanings would be closer in dimensional space, while different meanings would be further way.
 
 ## Why use Vector Embeddings?
 
@@ -45,7 +45,7 @@ Vector embeddings allow us to convert diverse forms of data into a common format
 
 The method of transforming data into embeddings and computing similarities between one or more items is referred to as vector search or similarity search.
 
-Imagine you have a specific song stuck in your head, but you don’t know the title. Instead of listening to each song in a vast playlist, you’d want to find the one that closely matches the  lyrics you remember. In the world of vectors, this is called “similarity search.”
+Imagine you have a specific song stuck in your head, but you don’t know the title. Instead of listening to each song in a vast playlist, you’d want to find the one that closely matches the lyrics you remember. In the world of vectors, this is called “similarity search.”
 
 When we represent data as vectors, we can measure how close or far apart these vectors are. Let’s assume we have the words apple, cat and dog represented by 5-dimension vector embeddings.
 
@@ -61,12 +61,7 @@ The "orange" vector is called the "query vector". We know that orange is a fruit
 
 ![AI vector dimension graph](/docs/ai/ai_vector_dimension_graph)
 
-This process has a wide range of applications, including but not limited to:
-
-- **Information retrieval:** By representing user queries as vectors, we can perform more accurate searches based on the meaning behind the queries, allowing us to retrieve more relevant information.
-- **Natural language processing:** Embeddings capture the essence of the text, making them excellent tools for tasks such as text classification and sentiment analysis.
-- **Recommendation systems:** Using vector similarity, we can recommend items that are similar to a given item, whether they be movies, products, books, or otherwise. This technique allows us to create more personalized and relevant recommendations.
-- **Anomaly detection:** By determining the similarity between items within a dataset, we can identify outliers or anomalies—items that don't quite fit the pattern. This can be crucial in many fields, from cybersecurity to quality control.
+You can se in the diagram above that there are two clusters: animals and fruit. The closer two vectors are, the more similar the data they represent is. So, to perform a similarity search, you need to calculate the distance between the query vector (orange) and all of the other vectors (cat, dog, apple) and find out which one is the smallest. Next, we’ll see how to calculate the distance between two vectors.
 
 ### Distance metrics
 
