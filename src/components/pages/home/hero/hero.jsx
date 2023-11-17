@@ -35,7 +35,7 @@ const Hero = () => {
     });
 
   const titleContent = (
-    <span className="lg:hidden">
+    <span className="lg:hidden" aria-hidden>
       <BlinkingText parentElement={titleEntry?.target} shouldAnimationStart={isAnimationPlaying}>
         {'Serverless Postgres'.split('').map((letter, index) => (
           <span
@@ -51,7 +51,7 @@ const Hero = () => {
   );
 
   const titleContentLg = (
-    <span className="hidden lg:inline">
+    <span className="hidden lg:inline" aria-hidden>
       <BlinkingText parentElement={titleEntry?.target} shouldAnimationStart={isAnimationPlaying}>
         {`${titlePhrases[0]} Postgres`.split('').map((letter, index) => (
           <span className="animate-text-blink" style={{ animationPlayState: 'paused' }} key={index}>
@@ -78,12 +78,13 @@ const Hero = () => {
             theme="white"
             ref={titleRef}
           >
+            <span className="sr-only">Serverless Postgres</span>
             {titleContent}
             {titleContentLg}
           </Heading>
           <p className="t-xl mt-7 max-w-[550px] text-white 2xl:mt-6 2xl:max-w-[480px] xl:mt-5 xl:max-w-[456px] lg:mx-auto lg:max-w-[414px]">
-            The fully managed serverless Postgres with a generous free tier. We separate storage
-            and compute to offer autoscaling, branching, and bottomless storage.
+            The fully managed serverless Postgres with a generous free tier. We separate storage and
+            compute to offer autoscaling, branching, and bottomless storage.
           </p>
           <Button
             id="hero-button"
