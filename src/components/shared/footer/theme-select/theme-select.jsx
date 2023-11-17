@@ -84,11 +84,26 @@ const ThemeSelect = ({ className = null }) => {
     <div className={clsx('relative h-8 w-36', className)}>
       <div
         className={clsx(
-          'absolute bottom-0 w-36 items-center rounded border border-gray-new-90 bg-white text-sm leading-none transition-shadow duration-200 dark:border-gray-new-40 dark:bg-gray-new-8 md:bottom-auto md:top-0 md:flex md:flex-col-reverse',
+          'absolute bottom-0 w-36 items-center flex flex-col-reverse rounded border border-gray-new-90 bg-white text-sm leading-none transition-shadow duration-200 dark:border-gray-new-40 dark:bg-gray-new-8 md:bottom-auto md:top-0 md:flex md:flex-col-reverse',
           showDropdown && 'shadow-select dark:shadow-none'
         )}
         ref={dropdownRef}
+        role="menuitem"
+        aria-expanded={showDropdown}
+        aria-haspopup="true"
+        onFocus={() => setShowDropdown(true)}
+        onBlur={() => setShowDropdown(false)}
       >
+        <button
+          className="flex h-[30px] w-full items-center py-[7px] pl-2.5 pr-3"
+          type="button"
+          aria-label={`Switch theme. Current theme: ${theme}`}
+          onClick={handleDropdown}
+        >
+          <ActiveThemeIcon theme={theme} />
+          <span className="ml-2.5 capitalize">{theme}</span>
+          <ChevronsIcon className="ml-auto text-gray-new-50 dark:text-gray-new-80" />
+        </button>
         <LazyMotion features={domAnimation}>
           <m.ul
             className="w-full"
@@ -115,16 +130,6 @@ const ThemeSelect = ({ className = null }) => {
               ))}
           </m.ul>
         </LazyMotion>
-        <button
-          className="flex h-[30px] w-full items-center py-[7px] pl-2.5 pr-3"
-          type="button"
-          aria-label={`Switch theme. Current theme: ${theme}`}
-          onClick={handleDropdown}
-        >
-          <ActiveThemeIcon theme={theme} />
-          <span className="ml-2.5 capitalize">{theme}</span>
-          <ChevronsIcon className="ml-auto text-gray-new-50 dark:text-gray-new-80" />
-        </button>
       </div>
     </div>
   );
