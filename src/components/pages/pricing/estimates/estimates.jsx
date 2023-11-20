@@ -312,10 +312,12 @@ const Estimates = () => {
                                 </span>
                                 {details && (
                                   <span className="relative xl:hidden">
-                                    <span
+                                    <button
                                       className="group peer cursor-pointer"
+                                      type="button"
                                       data-tooltip-id={`${name}-${index}`}
                                       data-tooltip-content={details}
+                                      aria-labelledby={`${name}-${index}`}
                                     >
                                       <img
                                         className="group-hover:hidden"
@@ -333,8 +335,11 @@ const Estimates = () => {
                                         loading="lazy"
                                         alt=""
                                       />
-                                    </span>
-                                    <span className="absolute left-[calc(100%+10px)] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-sm bg-gray-new-20 p-2 text-sm font-normal leading-none text-gray-new-60 opacity-0 transition-opacity duration-200 peer-hover:opacity-100 xl:static xl:mt-1.5 xl:translate-y-0 xl:whitespace-normal xl:bg-transparent xl:p-0 xl:opacity-100">
+                                    </button>
+                                    <span
+                                      className="absolute left-[calc(100%+10px)] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-sm bg-gray-new-20 p-2 text-sm font-normal leading-none text-gray-new-60 opacity-0 transition-opacity duration-200 peer-hover:opacity-100 peer-focus:opacity-100 xl:static xl:mt-1.5 xl:translate-y-0 xl:whitespace-normal xl:bg-transparent xl:p-0 xl:opacity-100"
+                                      id={`${name}-${index}`}
+                                    >
                                       {details}
                                     </span>
                                     <span className="absolute left-[calc(100%+6px)] top-1/2 h-0 w-0 -translate-y-1/2 border-b-4 border-r-4 border-t-4 border-transparent border-r-gray-new-20 opacity-0 transition-opacity duration-200 peer-hover:opacity-100" />
