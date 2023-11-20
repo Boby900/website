@@ -184,6 +184,8 @@ const Calculator = () => {
                       className="flex cursor-pointer items-center justify-center rounded-full before:absolute before:left-1/2 before:top-1/2 before:h-6 before:w-6 before:-translate-x-1/2 before:-translate-y-1/2 focus:outline-none focus-visible:ring focus-visible:ring-pricing-primary-4 focus-visible:ring-opacity-75"
                       onPointerEnter={() => computeSizeControls.start('click')}
                       onPointerLeave={() => computeSizeControls.start('from')}
+                      onFocus={() => computeSizeControls.start('click')}
+                      onBlur={() => computeSizeControls.start('from')}
                     >
                       <m.span
                         className="absolute h-2.5 w-1 rounded-[1px] bg-pricing-primary-1"
@@ -226,6 +228,8 @@ const Calculator = () => {
                       className="flex cursor-pointer items-center justify-center rounded-full before:absolute before:left-1/2 before:top-1/2 before:h-6 before:w-6 before:-translate-x-1/2 before:-translate-y-1/2 focus:outline-none focus-visible:ring focus-visible:ring-pricing-primary-4 focus-visible:ring-opacity-75"
                       onPointerEnter={() => activeTimeControls.start('click')}
                       onPointerLeave={() => activeTimeControls.start('from')}
+                      onFocus={() => activeTimeControls.start('click')}
+                      onBlur={() => activeTimeControls.start('from')}
                     >
                       <m.span
                         className="absolute h-2.5 w-1 rounded-[1px] bg-pricing-primary-1"
@@ -277,6 +281,8 @@ const Calculator = () => {
                       className="flex cursor-pointer items-center justify-center rounded-full before:absolute before:left-1/2 before:top-1/2 before:h-6 before:w-6 before:-translate-x-1/2 before:-translate-y-1/2 focus:outline-none focus-visible:ring focus-visible:ring-pricing-primary-4 focus-visible:ring-opacity-75"
                       onPointerEnter={() => projectStorageControls.start('click')}
                       onPointerLeave={() => projectStorageControls.start('from')}
+                      onFocus={() => projectStorageControls.start('click')}
+                      onBlur={() => projectStorageControls.start('from')}
                     >
                       <m.span
                         className="absolute h-2.5 w-1 rounded-[1px] bg-pricing-primary-1"

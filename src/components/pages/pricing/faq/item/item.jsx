@@ -40,7 +40,8 @@ const Item = ({ question, answer, linkText = null, linkUrl = null, index }) => {
         className="flex w-full items-start gap-4 text-left"
         type="button"
         aria-expanded={isOpen}
-        aria-controls={index}
+        aria-controls={`faq_${index}`}
+        id={`faq-button-${index}`}
         onClick={handleOpen}
       >
         <ArrowIcon
@@ -55,6 +56,9 @@ const Item = ({ question, answer, linkText = null, linkUrl = null, index }) => {
       </button>
       <LazyMotion features={domAnimation}>
         <m.div
+          role="region"
+          aria-labelledby={`faq-button-${index}`}
+          id={`faq_${index}`}
           initial="closed"
           animate={isOpen ? 'open' : 'closed'}
           variants={variantsAnimation}
@@ -62,6 +66,7 @@ const Item = ({ question, answer, linkText = null, linkUrl = null, index }) => {
             opacity: { duration: 0.2 },
             height: { duration: 0.3 },
           }}
+          hidden={!isOpen}
         >
           <p
             className={clsx(

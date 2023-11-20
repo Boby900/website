@@ -168,6 +168,7 @@ const Hero = () => {
                       animationColor="var(--accentColor)"
                       theme="primary"
                       size="sm"
+                      tabIndex={-1}
                     >
                       {button.text}
                     </AnimatedButton>
