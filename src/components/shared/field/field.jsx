@@ -19,13 +19,14 @@ const Field = forwardRef(
       tag: Tag = 'input',
       error,
       isDisabled,
+      required,
       ...otherProps
     },
     ref
   ) => (
     <div className={clsx('relative flex flex-col items-start', className)}>
       <label className="leading-none" htmlFor={name}>
-        {label}
+        {label} {required && <span aria-hidden>*</span>}
       </label>
       <Tag
         className={clsx(
@@ -43,19 +44,25 @@ const Field = forwardRef(
         name={name}
         type={type}
         disabled={isDisabled}
+        aria-required={required}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${name}-error` : null}
         {...otherProps}
       >
         {Tag === FIELD_TAGS.SELECT ? children : null}
       </Tag>
 
-      {error && (
-        <p
-          className="absolute top-[calc(100%+0.5rem)] text-sm leading-none text-secondary-1"
-          data-test="error-field-message"
-        >
-          {error}
-        </p>
-      )}
+      <p
+        className={clsx(
+          'absolute top-[calc(100%+0.5rem)] text-sm leading-none text-secondary-1 transition-opacity duration-200',
+          error ? 'opacity-100 visible' : 'opacity-0 invisible'
+        )}
+        data-test="error-field-message"
+        id={`${name}-error`}
+        aria-live="assertive"
+      >
+        {error}
+      </p>
     </div>
   )
 );
@@ -69,6 +76,7 @@ Field.propTypes = {
   error: PropTypes.string,
   children: PropTypes.node,
   isDisabled: PropTypes.bool,
+  required: PropTypes.bool,
 };
 
 export default Field;

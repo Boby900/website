@@ -107,20 +107,22 @@ const ContactForm = ({ formState, setFormState }) => {
     >
       <Field
         name="name"
-        label="Your name *"
+        label="Your name"
         autoComplete="name"
         error={errors.name?.message}
         isDisabled={formState === FORM_STATES.LOADING}
         {...register('name')}
+        required
       />
       <Field
         name="email"
-        label="Email address *"
+        label="Email address"
         type="email"
         autoComplete="email"
         isDisabled={formState === FORM_STATES.LOADING}
         error={errors.email?.message}
         {...register('email')}
+        required
       />
       <div className="flex space-x-10 2xl:space-x-6 md:grid md:gap-y-5 md:space-x-0">
         <Field
@@ -151,11 +153,12 @@ const ContactForm = ({ formState, setFormState }) => {
       </div>
       <Field
         name="message"
-        label="Message *"
+        label="Message"
         tag="textarea"
         isDisabled={formState === FORM_STATES.LOADING}
         error={errors.message?.message}
         {...register('message')}
+        required
       />
 
       <div className="relative mt-2 flex items-center 2xl:mt-1 md:mt-0 md:flex-col md:items-start">
