@@ -520,7 +520,13 @@ const Calculator = () => {
 
 const Tooltip = ({ content, id }) => (
   <span className="relative ml-[6px] inline-flex text-left align-middle normal-case lg:hidden">
-    <span className="group peer cursor-pointer" data-tooltip-id={id} data-tooltip-content={content}>
+    <button
+      className="group peer cursor-pointer"
+      type="button"
+      data-tooltip-id={id}
+      data-tooltip-content={content}
+      aria-labelledby={id}
+    >
       <img
         className="group-hover:hidden"
         src={infoIcon}
@@ -537,8 +543,12 @@ const Tooltip = ({ content, id }) => (
         loading="lazy"
         alt=""
       />
-    </span>
-    <span className="pointer-events-none absolute	left-[calc(100%+12px)] top-1/2 z-50 w-[14rem] -translate-y-1/2 rounded-[4px] bg-gray-new-20 px-3 py-[10px] text-[12px] font-normal leading-dense tracking-wide text-gray-new-90 opacity-0 transition-opacity duration-200 peer-hover:opacity-100 lg:static lg:mt-1.5 lg:hidden lg:translate-y-0 lg:bg-transparent lg:p-0">
+    </button>
+    <span
+      className="pointer-events-none absolute	left-[calc(100%+12px)] top-1/2 z-50 w-[14rem] -translate-y-1/2 rounded-[4px] bg-gray-new-20 px-3 py-[10px] text-[12px] font-normal leading-dense tracking-wide text-gray-new-90 opacity-0 transition-opacity duration-200 peer-hover:opacity-100 peer-focus:opacity-100 lg:static lg:mt-1.5 lg:hidden lg:translate-y-0 lg:bg-transparent lg:p-0"
+      role="tooltip"
+      id={id}
+    >
       {content}
     </span>
     <span className="absolute left-[calc(100%+8px)] top-1/2 h-4 w-4 -translate-y-1/2 rotate-45 rounded bg-gray-new-20 opacity-0 transition-opacity duration-200 peer-hover:opacity-100 lg:hidden" />
