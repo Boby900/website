@@ -134,44 +134,49 @@ const Form = ({ className }) => {
     >
       <Select
         control={control}
-        label="What type of integration do you need? *"
+        label="What type of integration do you need?"
         selected={integrationType}
         setSelected={setIntegrationType}
         options={integrationTypeOptions}
         name="integration_type"
+        required
       />
 
       <div className="grid grid-cols-2 gap-5 sm:grid-cols-1 sm:gap-6">
         <Field
-          label="First Name *"
+          label="First Name"
           name="firstname"
           placeholder="Marques"
           {...register('firstname')}
           error={errors.firstname?.message}
+          required
         />
         <Field
-          label="Last Name *"
+          label="Last Name"
           name="lastname"
           placeholder="Hansen"
           {...register('lastname')}
           error={errors.lastname?.message}
+          required
         />
       </div>
       <div className="grid grid-cols-2 gap-5 sm:grid-cols-1">
         <Field
-          label="Email *"
+          label="Email"
           type="email"
           name="email"
           placeholder="info@example.com"
           {...register('email')}
           error={errors.email?.message}
+          required
         />
         <Field
-          label="Company Name *"
+          label="Company Name"
           name="company"
           placeholder="Example, Inc."
           {...register('company')}
           error={errors.company?.message}
+          required
         />
       </div>
       {integrationType.id === 'oauth' && (
@@ -254,12 +259,13 @@ const Form = ({ className }) => {
       )}
 
       <Field
-        label="Additional details*"
+        label="Additional details"
         tag="textarea"
         placeholder="Message"
         name="message"
         {...register('message')}
         error={errors.message?.message}
+        required
       />
       <div className="relative flex flex-col gap-y-6 lg:mt-3 lg:flex-row lg:items-center lg:gap-x-5 md:mt-0 md:flex-col md:items-stretch md:gap-y-4">
         <Button

@@ -18,7 +18,7 @@ const MultiSelect = ({ control, setValue, selectedValues }) => (
     <Combobox.Label className="text-sm leading-none text-gray-new-70">
       What application scope would you need?
     </Combobox.Label>
-    <div className="relative mt-2 flex min-h-[40px] w-full appearance-none rounded border border-transparent bg-white bg-opacity-[0.04] px-4 py-[7px] caret-transparent transition-colors duration-200 placeholder:text-gray-new-40 hover:border-gray-new-15 focus:border-gray-new-15 focus:outline-none active:border-gray-new-15">
+    <div className="relative mt-2 flex min-h-[40px] w-full appearance-none rounded border border-transparent bg-white bg-opacity-[0.04] px-4 py-[7px] caret-transparent transition-colors duration-200">
       {selectedValues?.length > 0 && (
         <ul className="flex flex-wrap gap-x-2 gap-y-1">
           {selectedValues.map((item) => (
@@ -45,14 +45,14 @@ const MultiSelect = ({ control, setValue, selectedValues }) => (
         </ul>
       )}
       <Combobox.Input
-        className="pointer-events-none absolute inset-0 opacity-0 focus:outline-none"
+        className="pointer-events-none absolute inset-0 opacity-0 peer/input"
         readOnly
       />
-      <Combobox.Button className="absolute right-0 top-1/2 flex h-full w-full -translate-y-1/2 items-center justify-end pr-4">
+      <Combobox.Button className="absolute right-0 top-1/2 flex h-full w-full -translate-y-1/2 items-center justify-end pr-4 border border-transparent transition-colors duration-200 peer-hover/input:border-gray-new-15 peer-focus/input:border-gray-new-20 peer-focus/input:outline-none peer-active/input:border-gray-new-20">
         <ChevronIcon className="h-4 w-4" />
       </Combobox.Button>
     </div>
-    <Combobox.Options className="absolute top-full z-10 mt-1.5 flex w-full flex-col gap-y-3 rounded border border-gray-new-15 bg-[#1c1d1e] p-4">
+    <Combobox.Options className="absolute top-full z-10 mt-1.5 flex w-full flex-col gap-y-3 rounded border bg-[#1c1d1e] p-4 border-gray-new-20">
       {applicationScopeOptions.map((item) => (
         <Combobox.Option
           className="ui-selected:multi-checkbox cursor-pointer text-sm leading-none transition-colors duration-200 hover:text-green-45 ui-active:text-green-45"

@@ -12,6 +12,7 @@ const Select = ({
   options,
   control,
   placeholder = null,
+  required,
 }) => (
   <Controller
     control={control}
@@ -26,13 +27,16 @@ const Select = ({
           setSelected(e);
         }}
       >
-        <Combobox.Label className="text-sm leading-none text-gray-new-70">{label}</Combobox.Label>
+        <Combobox.Label className="text-sm leading-none text-gray-new-70">
+          {label} {required && <span aria-hidden>*</span>}
+        </Combobox.Label>
         <div className="relative mt-2">
           <Combobox.Input
-            className="h-10 w-full appearance-none rounded border border-transparent bg-white bg-opacity-[0.04] px-4 caret-transparent transition-colors duration-200 placeholder:text-gray-new-40 hover:border-gray-new-15 focus:border-gray-new-15 focus:outline-none active:border-gray-new-15"
+            className="h-10 w-full appearance-none rounded border border-transparent bg-white bg-opacity-[0.04] px-4 caret-transparent transition-colors duration-200 placeholder:text-gray-new-40 hover:border-gray-new-15 focus:border-gray-new-20 active:border-gray-new-20 focus:outline-none"
             displayValue={() => value?.name}
             placeholder={placeholder}
             name={name}
+            aria-required={required}
             readOnly
           />
           <Combobox.Button className="absolute right-0 top-1/2 flex h-full w-full -translate-y-1/2 items-center justify-end pr-4">
@@ -42,7 +46,7 @@ const Select = ({
         <Combobox.Options className="absolute top-full z-10 mt-1.5 flex w-full flex-col gap-y-3 rounded border border-gray-new-15 bg-[#1c1d1e] p-4">
           {options.map((item) => (
             <Combobox.Option
-              className="cursor-pointer text-sm leading-none transition-colors duration-200 hover:text-green-45 ui-selected:text-green-45"
+              className="cursor-pointer text-sm leading-none transition-colors duration-200 hover:text-green-45 ui-selected:text-green-45 focus:text-green-45 ui-active:text-green-45"
               key={item.id}
               value={item}
             >
@@ -82,6 +86,7 @@ Select.propTypes = {
   ).isRequired,
   control: PropTypes.any,
   placeholder: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 export default Select;

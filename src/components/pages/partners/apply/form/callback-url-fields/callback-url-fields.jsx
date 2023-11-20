@@ -19,15 +19,18 @@ const CallbackUrlFields = ({ register }) => {
     <fieldset className="flex flex-col border-b border-gray-new-15 pb-9 xl:pb-7 lg:pb-6 md:pb-5">
       <div className="flex items-center">
         <span className="text-sm leading-none text-gray-new-70">Callback URLs</span>
-        <span
+        <button
           className="relative ml-1.5 flex items-center after:absolute after:-inset-2"
+          type="button"
           data-tooltip-id="callback-urls-tooltip"
           data-tooltip-html="May be plural, the port to use<br/> for your application"
+          aria-labelledby="callback-urls-tooltip"
         >
           <img src={infoSvg} width={14} height={14} alt="" loading="lazy" aria-hidden />
-        </span>
+        </button>
         <Tooltip
           className="flat-breaks sm:flat-none !text-xs !leading-none"
+          role="tooltip"
           id="callback-urls-tooltip"
           place={width > MOBILE_WIDTH ? 'right' : 'top-start'}
         />

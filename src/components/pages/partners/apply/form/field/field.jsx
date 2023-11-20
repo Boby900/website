@@ -20,6 +20,7 @@ const Field = forwardRef(
       tooltipId = null,
       tooltipContent = null,
       error = null,
+      required,
       ...otherProps
     },
     ref
@@ -28,18 +29,21 @@ const Field = forwardRef(
     return (
       <div className={clsx('relative flex flex-col', className)}>
         <label className="flex items-center text-sm leading-none text-gray-new-70" htmlFor={name}>
-          {label}
+          {label} {required && <span aria-hidden>*</span>}
           {tooltipId && tooltipContent && (
             <>
-              <span
+              <button
+                type="button"
                 className="relative ml-1.5 flex items-center after:absolute after:-inset-2"
                 data-tooltip-id={tooltipId}
                 data-tooltip-html={tooltipContent}
                 href="#"
+                aria-describedby={tooltipId}
               >
                 <img src={infoSvg} width={14} height={14} alt="" loading="lazy" aria-hidden />
-              </span>
+              </button>
               <Tooltip
+                role="tooltip"
                 className="flat-breaks sm:flat-none z-20"
                 id={tooltipId}
                 place={width > MOBILE_WIDTH ? 'right' : 'top-start'}
@@ -53,23 +57,30 @@ const Field = forwardRef(
             Tag === 'textarea' ? 'min-h-[64px] pb-3 pt-2' : 'h-10',
             error
               ? 'border-secondary-1'
-              : 'border-transparent hover:border-gray-new-15 focus:border-gray-new-15 active:border-gray-new-15'
+              : 'border-transparent hover:border-gray-new-15 focus:border-gray-new-20 active:border-gray-new-20'
           )}
           id={name}
           name={name}
           type={Tag === 'textarea' ? undefined : type}
           placeholder={placeholder}
           ref={ref}
+          aria-required={required}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${name}-error` : undefined}
           {...otherProps}
         />
-        {error && (
-          <span
-            className="mt-2 text-sm leading-none text-secondary-1"
-            data-test="error-field-message"
-          >
-            {error}
-          </span>
-        )}
+
+        <span
+          className={clsx(
+            'mt-2 text-sm leading-none text-secondary-1',
+            error ? 'inline' : 'hidden'
+          )}
+          id={`${name}-error`}
+          aria-live="assertive"
+          data-test="error-field-message"
+        >
+          {error}
+        </span>
       </div>
     );
   }
@@ -85,6 +96,7 @@ Field.propTypes = {
   tooltipId: PropTypes.string,
   tooltipContent: PropTypes.string,
   error: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 export default Field;
