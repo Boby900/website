@@ -176,6 +176,9 @@ const SubscribeForm = ({ className = null, size = 'lg', dataTest }) => {
               value={email}
               placeholder="Your email address..."
               disabled={formState === STATES.LOADING || formState === STATES.SUCCESS}
+              aria-invalid={!!errorMessage}
+              aria-describedby="subscription-form-error"
+              aria-required
               onChange={handleInputChange}
             />
             <LazyMotion features={domAnimation}>
@@ -254,7 +257,9 @@ const SubscribeForm = ({ className = null, size = 'lg', dataTest }) => {
                   'absolute left-7 top-full text-sm leading-none tracking-[-0.02em] text-secondary-1 sm:text-xs sm:leading-tight',
                   size === 'sm' ? 'mt-1.5' : 'mt-2.5'
                 )}
+                id="subscription-form-error"
                 data-test="error-message"
+                aria-live="assertive"
               >
                 {errorMessage}
               </span>

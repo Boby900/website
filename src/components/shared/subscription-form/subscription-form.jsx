@@ -137,6 +137,9 @@ const SubscriptionForm = ({
           autoComplete="email"
           value={email}
           readOnly={formState !== 'default'}
+          aria-invalid={!!errorMessage}
+          aria-describedby="subscribe-error-message"
+          aria-required
           onChange={handleInputChange}
         />
 
@@ -150,6 +153,8 @@ const SubscriptionForm = ({
               exit="exit"
               variants={appearAndExitAnimationVariants}
               data-test="error-message"
+              aria-live="assertive"
+              id="subscribe-error-message"
             >
               {errorMessage}
             </m.span>
