@@ -23,7 +23,7 @@ const variantsAnimation = {
   },
 };
 
-const Item = ({ question, answer, linkText = null, linkUrl = null, index }) => {
+const Item = ({ question, answer, linkText = null, linkUrl = null, linkLabel = null, index }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
@@ -83,6 +83,7 @@ const Item = ({ question, answer, linkText = null, linkUrl = null, index }) => {
               to={linkUrl}
             >
               {linkText}
+              {linkLabel && <span className="sr-only">{linkLabel}</span>}
             </Link>
           )}
         </m.div>
@@ -96,6 +97,7 @@ Item.propTypes = {
   answer: PropTypes.string.isRequired,
   linkText: PropTypes.string,
   linkUrl: PropTypes.string,
+  linkLabel: PropTypes.string,
   index: PropTypes.number.isRequired,
 };
 
