@@ -73,6 +73,7 @@ const BlogPostCard = ({
           to={link}
           target={url ? '_blank' : undefined}
           rel={url ? 'noopener noreferrer' : undefined}
+          tabIndex={-1}
         >
           {largeCover?.mediaItemUrl ? (
             <Image
@@ -157,7 +158,7 @@ const BlogPostCard = ({
                 size === 'lg' || size === 'xl' || withAuthorPhoto ? 'mr-2 block' : 'hidden'
               )}
               src={postAuthor.postAuthor?.image?.mediaItemUrl}
-              alt={postAuthor?.title}
+              alt={`${postAuthor?.title} photo`}
               quality={85}
               width={28}
               height={28}

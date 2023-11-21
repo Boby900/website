@@ -88,7 +88,10 @@ const Sidebar = () => (
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Icon className="h-4 w-4 text-gray-new-70 transition-colors duration-200 group-hover:text-green-45" />
+                <Icon
+                  className="h-4 w-4 text-gray-new-70 transition-colors duration-200 group-hover:text-green-45"
+                  aria-hidden
+                />
               </a>
             </li>
           ))}
