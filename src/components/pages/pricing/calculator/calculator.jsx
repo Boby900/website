@@ -154,7 +154,7 @@ const Calculator = () => {
               </h3>
               <div className="mt-5 grid grid-cols-2 items-center gap-3 md:mt-5">
                 <h4 className="inline-flex items-center text-sm leading-none tracking-tight text-gray-new-90">
-                  <span>Compute size</span>
+                  <span id="compute-size">Compute size</span>
                   <Tooltip
                     id="compute"
                     content="Compute size is measured in Compute Units (CUs). One CU has 1 vCPU and 4 GB of RAM. The number of CUs determines processing power."
@@ -182,6 +182,7 @@ const Calculator = () => {
                   <LazyMotion features={domAnimation}>
                     <Slider.Thumb
                       className="flex cursor-pointer items-center justify-center rounded-full before:absolute before:left-1/2 before:top-1/2 before:h-6 before:w-6 before:-translate-x-1/2 before:-translate-y-1/2 focus:outline-none focus-visible:ring focus-visible:ring-pricing-primary-4 focus-visible:ring-opacity-75"
+                      aria-labelledby="compute-size"
                       onPointerEnter={() => computeSizeControls.start('click')}
                       onPointerLeave={() => computeSizeControls.start('from')}
                       onFocus={() => computeSizeControls.start('click')}
@@ -205,7 +206,7 @@ const Calculator = () => {
               </div>
               <div className="mt-6 grid grid-cols-2 items-center gap-3 xl:mt-6 lg:mt-6">
                 <h4 className="inline-flex items-center text-sm leading-none tracking-tight text-gray-new-90">
-                  Active time
+                  <span id="active-time">Active time</span>
                   <Tooltip
                     id="activeTime"
                     content="The number of hours per day that your compute resources are active, on average."
@@ -226,6 +227,7 @@ const Calculator = () => {
                   <LazyMotion features={domAnimation}>
                     <Slider.Thumb
                       className="flex cursor-pointer items-center justify-center rounded-full before:absolute before:left-1/2 before:top-1/2 before:h-6 before:w-6 before:-translate-x-1/2 before:-translate-y-1/2 focus:outline-none focus-visible:ring focus-visible:ring-pricing-primary-4 focus-visible:ring-opacity-75"
+                      aria-labelledby="active-time"
                       onPointerEnter={() => activeTimeControls.start('click')}
                       onPointerLeave={() => activeTimeControls.start('from')}
                       onFocus={() => activeTimeControls.start('click')}
@@ -260,7 +262,10 @@ const Calculator = () => {
 
           <div className="row-span-1 flex rounded-[10px] bg-gray-new-8 md:flex-col">
             <div className="grow p-5 xl:px-6 xl:py-5 md:px-5">
-              <h3 className="text-sm font-medium uppercase leading-none tracking-wider text-secondary-9">
+              <h3
+                className="text-sm font-medium uppercase leading-none tracking-wider text-secondary-9"
+                id="project-storage"
+              >
                 Project storage
               </h3>
               <div className="mt-5 grid grid-cols-2 items-center gap-3 md:mt-5">
@@ -270,7 +275,7 @@ const Calculator = () => {
                   defaultValue={[STORAGE_VALUES.default]}
                   min={STORAGE_VALUES.min}
                   max={STORAGE_VALUES.max}
-                  aria-label="Compute units"
+                  aria-label="Project storage"
                   onValueChange={(value) => setStorageValue(value[0])}
                 >
                   <Slider.Track className="relative h-[2px] w-full grow rounded-[10px] bg-gray-new-30">
@@ -279,6 +284,7 @@ const Calculator = () => {
                   <LazyMotion features={domAnimation}>
                     <Slider.Thumb
                       className="flex cursor-pointer items-center justify-center rounded-full before:absolute before:left-1/2 before:top-1/2 before:h-6 before:w-6 before:-translate-x-1/2 before:-translate-y-1/2 focus:outline-none focus-visible:ring focus-visible:ring-pricing-primary-4 focus-visible:ring-opacity-75"
+                      aria-labelledby="project-storage"
                       onPointerEnter={() => projectStorageControls.start('click')}
                       onPointerLeave={() => projectStorageControls.start('from')}
                       onFocus={() => projectStorageControls.start('click')}
