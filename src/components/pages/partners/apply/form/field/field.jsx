@@ -32,18 +32,14 @@ const Field = forwardRef(
           {label} {required && <span aria-hidden>*</span>}
           {tooltipId && tooltipContent && (
             <>
-              <button
-                type="button"
+              <span
                 className="relative ml-1.5 flex items-center after:absolute after:-inset-2"
                 data-tooltip-id={tooltipId}
                 data-tooltip-html={tooltipContent}
-                href="#"
-                aria-describedby={tooltipId}
               >
                 <img src={infoSvg} width={14} height={14} alt="" loading="lazy" aria-hidden />
-              </button>
+              </span>
               <Tooltip
-                role="tooltip"
                 className="flat-breaks sm:flat-none z-20"
                 id={tooltipId}
                 place={width > MOBILE_WIDTH ? 'right' : 'top-start'}
@@ -66,7 +62,7 @@ const Field = forwardRef(
           ref={ref}
           aria-required={required}
           aria-invalid={!!error}
-          aria-describedby={error ? `${name}-error` : undefined}
+          aria-describedby={`${name}-error ${tooltipId}`}
           {...otherProps}
         />
 

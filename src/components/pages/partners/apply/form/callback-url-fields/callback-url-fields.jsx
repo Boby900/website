@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import AddIcon from 'components/pages/partners/apply/images/add.inline.svg';
 import infoSvg from 'components/pages/partners/apply/images/info.svg';
@@ -11,23 +11,29 @@ const CALLBACK_URLS_LIMIT = 3;
 const MOBILE_WIDTH = 360;
 
 const CallbackUrlFields = ({ register }) => {
+  const inputRefs = useRef([]);
   const [shouldAddCallbackUrl, setShouldAddCallbackUrl] = useState(true);
   const [visibleInputIndex, setVisibleInputIndex] = useState(0);
   const { width } = useWindowSize();
 
+  useEffect(() => {
+    // If a new input has become visible, focus it
+    if (inputRefs.current[visibleInputIndex]) {
+      inputRefs.current[visibleInputIndex].focus();
+    }
+  }, [visibleInputIndex]);
+
   return (
     <fieldset className="flex flex-col border-b border-gray-new-15 pb-9 xl:pb-7 lg:pb-6 md:pb-5">
       <div className="flex items-center">
-        <span className="text-sm leading-none text-gray-new-70">Callback URLs</span>
-        <button
+        <legend className="text-sm leading-none text-gray-new-70">Callback URLs</legend>
+        <span
           className="relative ml-1.5 flex items-center after:absolute after:-inset-2"
-          type="button"
           data-tooltip-id="callback-urls-tooltip"
           data-tooltip-html="May be plural, the port to use<br/> for your application"
-          aria-labelledby="callback-urls-tooltip"
         >
           <img src={infoSvg} width={14} height={14} alt="" loading="lazy" aria-hidden />
-        </button>
+        </span>
         <Tooltip
           className="flat-breaks sm:flat-none !text-xs !leading-none"
           role="tooltip"
@@ -50,6 +56,10 @@ const CallbackUrlFields = ({ register }) => {
               {...register(name)}
               key={index}
               aria-label={`Callback URL ${index + 1}`}
+              aria-describedby="callback-urls-tooltip"
+              ref={(el) => {
+                inputRefs.current[index] = el;
+              }}
             />
           );
         })}
@@ -60,6 +70,7 @@ const CallbackUrlFields = ({ register }) => {
           shouldAddCallbackUrl ? 'text-green-45' : 'cursor-not-allowed text-gray-new-40'
         )}
         type="button"
+        disabled={!shouldAddCallbackUrl}
         onClick={() => {
           if (visibleInputIndex < CALLBACK_URLS_LIMIT - 1) {
             setVisibleInputIndex((prevIndex) => prevIndex + 1);

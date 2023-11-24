@@ -297,58 +297,61 @@ const Estimates = () => {
                             <span>Avg usage</span>
                             <span>Avg price</span>
                           </div>
-                          {metrics.map(({ name, usage, details, price }, index) => (
-                            <div
-                              className={clsx(
-                                'text-primary-94 border-b border-[rgba(255,255,255,0.06)] py-[12px] text-[15px] tracking-[-0.06em] xl:py-3',
-                                gridClassName
-                              )}
-                              key={index}
-                            >
-                              <span>{name}</span>
-                              <span className="inline-flex items-center gap-x-[7px] xl:flex-col xl:items-start">
-                                <span>
-                                  {usage} <span className="text-gray-new-70">/month</span>
-                                </span>
-                                {details && (
-                                  <span className="relative xl:hidden">
-                                    <button
-                                      className="group peer cursor-pointer"
-                                      type="button"
-                                      data-tooltip-id={`${name}-${index}`}
-                                      data-tooltip-content={details}
-                                      aria-labelledby={`${name}-${index}`}
-                                    >
-                                      <img
-                                        className="group-hover:hidden"
-                                        src={infoIcon}
-                                        width={14}
-                                        height={14}
-                                        loading="lazy"
-                                        alt=""
-                                      />
-                                      <img
-                                        className="hidden group-hover:block"
-                                        src={infoHoveredIcon}
-                                        width={14}
-                                        height={14}
-                                        loading="lazy"
-                                        alt=""
-                                      />
-                                    </button>
-                                    <span
-                                      className="absolute left-[calc(100%+10px)] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-sm bg-gray-new-20 p-2 text-sm font-normal leading-none text-gray-new-60 opacity-0 transition-opacity duration-200 peer-hover:opacity-100 peer-focus:opacity-100 xl:static xl:mt-1.5 xl:translate-y-0 xl:whitespace-normal xl:bg-transparent xl:p-0 xl:opacity-100"
-                                      id={`${name}-${index}`}
-                                    >
-                                      {details}
-                                    </span>
-                                    <span className="absolute left-[calc(100%+6px)] top-1/2 h-0 w-0 -translate-y-1/2 border-b-4 border-r-4 border-t-4 border-transparent border-r-gray-new-20 opacity-0 transition-opacity duration-200 peer-hover:opacity-100" />
-                                  </span>
+                          {metrics.map(({ name, usage, details, price }, index) => {
+                            const id = name.replace(/\s+/g, '-').toLowerCase();
+                            return (
+                              <div
+                                className={clsx(
+                                  'text-primary-94 border-b border-[rgba(255,255,255,0.06)] py-[12px] text-[15px] tracking-[-0.06em] xl:py-3',
+                                  gridClassName
                                 )}
-                              </span>
-                              <span className="text-[15px] text-gray-new-94">{price}</span>
-                            </div>
-                          ))}
+                                key={index}
+                              >
+                                <span>{name}</span>
+                                <span className="inline-flex items-center gap-x-[7px] xl:flex-col xl:items-start">
+                                  <span>
+                                    {usage} <span className="text-gray-new-70">/month</span>
+                                  </span>
+                                  {details && (
+                                    <span className="relative xl:hidden">
+                                      <button
+                                        className="group peer cursor-pointer"
+                                        type="button"
+                                        data-tooltip-id={`${id}-${index}`}
+                                        data-tooltip-content={details}
+                                        aria-labelledby={`${id}-${index}`}
+                                      >
+                                        <img
+                                          className="group-hover:hidden"
+                                          src={infoIcon}
+                                          width={14}
+                                          height={14}
+                                          loading="lazy"
+                                          alt=""
+                                        />
+                                        <img
+                                          className="hidden group-hover:block"
+                                          src={infoHoveredIcon}
+                                          width={14}
+                                          height={14}
+                                          loading="lazy"
+                                          alt=""
+                                        />
+                                      </button>
+                                      <span
+                                        className="absolute left-[calc(100%+10px)] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-sm bg-gray-new-20 p-2 text-sm font-normal leading-none text-gray-new-60 opacity-0 transition-opacity duration-200 peer-hover:opacity-100 peer-focus:opacity-100 xl:static xl:mt-1.5 xl:translate-y-0 xl:whitespace-normal xl:bg-transparent xl:p-0 xl:opacity-100"
+                                        id={`${id}-${index}`}
+                                      >
+                                        {details}
+                                      </span>
+                                      <span className="absolute left-[calc(100%+6px)] top-1/2 h-0 w-0 -translate-y-1/2 border-b-4 border-r-4 border-t-4 border-transparent border-r-gray-new-20 opacity-0 transition-opacity duration-200 peer-hover:opacity-100" />
+                                    </span>
+                                  )}
+                                </span>
+                                <span className="text-[15px] text-gray-new-94">{price}</span>
+                              </div>
+                            );
+                          })}
                           <div className={clsx('mt-2 text-base font-medium', gridClassName)}>
                             <span className="col-span-2 inline-flex flex-col">
                               <span className="uppercase text-gray-new-94">Total price:</span>

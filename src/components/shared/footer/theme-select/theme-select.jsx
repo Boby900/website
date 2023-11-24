@@ -81,7 +81,7 @@ const ThemeSelect = ({ className = null }) => {
   if (!mounted) return null;
 
   return (
-    <div className={clsx('relative h-8 w-36', className)}>
+    <div className={clsx('relative h-8 w-36', className)} role="menu">
       <div
         className={clsx(
           'absolute bottom-0 w-36 items-center flex flex-col-reverse rounded border border-gray-new-90 bg-white text-sm leading-none transition-shadow duration-200 dark:border-gray-new-40 dark:bg-gray-new-8 md:bottom-auto md:top-0 md:flex md:flex-col-reverse',

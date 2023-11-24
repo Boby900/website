@@ -26,8 +26,8 @@ const SubMenuItem = ({ to, text, items, isThemeBlack }) => {
   return (
     <li
       className={clsx(items?.length > 0 && 'relative')}
-      aria-expanded={items?.length > 0 && isSubmenuOpen}
-      aria-haspopup={items?.length > 0}
+      aria-expanded={items?.length > 0 ? isSubmenuOpen : undefined}
+      aria-haspopup={items?.length > 0 ? 'true' : undefined}
       role="menuitem"
       onMouseEnter={() => setIsSubmenuOpen(true)}
       onMouseLeave={() => setIsSubmenuOpen(false)}
@@ -152,7 +152,7 @@ const Header = ({
           </Link>
 
           <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <ul className="flex space-x-12 3xl:space-x-10 2xl:space-x-8 lg:hidden">
+            <ul className="flex space-x-12 3xl:space-x-10 2xl:space-x-8 lg:hidden" role="menu">
               {MENUS.header.map((item, index) => (
                 <SubMenuItem {...item} isThemeBlack={isThemeBlack} key={index} />
               ))}
