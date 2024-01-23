@@ -28,7 +28,7 @@ function extractTextFromNode(node) {
     const html = node.props.dangerouslySetInnerHTML.__html;
 
     const convertedHtml = html
-      .replace(/<[^>]*>?/gm, '')
+      ?.replace(/<[^>]*>?/gm, '')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"')

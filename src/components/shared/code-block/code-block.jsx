@@ -16,7 +16,7 @@ const CodeBlock = async (props) => {
     <CodeBlockWrapper copyButtonClassName={copyButtonClassName}>
       <div
         className={clsx(
-          '[&>pre]:my-0 [&>pre]:!bg-gray-new-98 [&>pre]:dark:!bg-gray-new-10',
+          '[&>pre]:my-0 [&>pre]:!bg-gray-new-98 [&>pre]:dark:!bg-gray-new-10 [&_code]:grid [&_code]:leading-loose',
           className,
           { 'code-wrap': meta?.includes('shouldWrap') }
         )}
