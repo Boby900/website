@@ -28,11 +28,11 @@ const parseHighlightLines = (meta) => {
 };
 
 export default async function highlight(code, lang = 'bash', meta = '', theme = 'css-variables') {
-  let language = lang === 'text' ? 'bash' : lang;
-
   if (!code) {
     return '';
   }
+
+  const language = lang === 'text' ? 'bash' : lang;
 
   if (!highlighter) {
     highlighter = await getHighlighter({
@@ -42,24 +42,24 @@ export default async function highlight(code, lang = 'bash', meta = '', theme = 
   }
 
   // Check for the loaded languages, and load the language if it's not loaded yet.
-  if (!highlighter?.getLoadedLanguages().includes(language)) {
+  if (!highlighter?.getLoadedLanguages().includes(lang)) {
     // Check if the language is supported by Shiki
     const bundles = BUNDLED_LANGUAGES.filter(
       (bundle) =>
         // Languages are specified by their id, they can also have aliases (i. e. "js" and "javascript")
-        bundle.id === lang || bundle.aliases?.includes(language)
+        bundle.id === lang || bundle.aliases?.includes(lang)
     );
     if (bundles.length > 0) {
-      await highlighter?.loadLanguage(language);
+      await highlighter?.loadLanguage(lang);
     } else {
       // If the language is not supported, fallback to bash
-      language = 'bash';
+      lang = 'bash';
     }
   }
 
   const highlightLines = parseHighlightLines(meta);
 
-  const tokens = highlighter.codeToThemedTokens(code, language, theme, {
+  const tokens = highlighter.codeToThemedTokens(code, lang, theme, {
     includeExplanation: false,
   });
 
