@@ -1,4 +1,4 @@
-import { BUNDLED_LANGUAGES, getHighlighter, renderToHtml } from 'shiki';
+import { BUNDLED_LANGUAGES, getHighlighter } from 'shiki';
 
 let highlighter;
 
@@ -27,59 +27,72 @@ const parseHighlightLines = (meta) => {
   return highlightLines;
 };
 
-export default async function highlight(code, lang = 'bash', meta = '', theme = 'css-variables') {
-  if (!code) {
-    return '';
+const getOptions = (highlightLines, language, theme) => {
+  if (highlightLines.length > 0) {
+    return {
+      language,
+      theme,
+      lineOptions: highlightLines.map((line) => ({
+        line,
+        classes: ['highlighted-line'],
+      })),
+    };
   }
 
-  const language = lang === 'text' ? 'bash' : lang;
+  return {
+    language,
+    theme,
+  };
+};
+
+const getLanguage = (lang) => {
+  // go through the list of supported languages and check if the language is supported
+  const supportedLanguage = BUNDLED_LANGUAGES.find(
+    (language) =>
+      // Languages are specified by their id, they can also have aliases (i. e. "js" and "javascript")
+      language.id === lang || language.aliases?.includes(lang)
+  );
+
+  // If the language is not supported, fallback to bash
+  if (!supportedLanguage) {
+    return 'bash';
+  }
+
+  return supportedLanguage?.id || lang;
+};
+
+export default async function highlight(code, lang = 'bash', meta = '', theme = 'css-variables') {
+  if (!code) {
+    return Promise.resolve('');
+  }
+
+  let language = await getLanguage(lang);
 
   if (!highlighter) {
-    highlighter = await getHighlighter({
-      langs: [language],
-      theme,
-    });
+    highlighter = await getHighlighter({ langs: [language], theme });
   }
 
   // Check for the loaded languages, and load the language if it's not loaded yet.
-  if (!highlighter?.getLoadedLanguages().includes(lang)) {
+  if (!highlighter?.getLoadedLanguages().includes(language)) {
     // Check if the language is supported by Shiki
     const bundles = BUNDLED_LANGUAGES.filter(
       (bundle) =>
         // Languages are specified by their id, they can also have aliases (i. e. "js" and "javascript")
-        bundle.id === lang || bundle.aliases?.includes(lang)
+        bundle.id === language || bundle.aliases?.includes(language)
     );
     if (bundles.length > 0) {
-      await highlighter?.loadLanguage(lang);
+      await highlighter?.loadLanguage(language);
     } else {
       // If the language is not supported, fallback to bash
-      lang = 'bash';
+      language = 'bash';
     }
   }
 
   const highlightLines = parseHighlightLines(meta);
 
-  const tokens = highlighter?.codeToThemedTokens(code, lang, theme, {
-    includeExplanation: false,
+  const html = await highlighter?.codeToHtml(code, {
+    ...getOptions(highlightLines, language, theme),
   });
-
-  const getOptions = (highlightLines) => {
-    if (highlightLines.length > 0) {
-      return {
-        bg: 'transparent',
-        lineOptions: highlightLines.map((line) => ({
-          line,
-          classes: ['highlighted-line'],
-        })),
-      };
-    }
-
-    return {
-      bg: 'transparent',
-    };
-  };
-
-  const html = renderToHtml(tokens, getOptions(highlightLines));
 
   return html;
 }

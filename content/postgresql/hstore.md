@@ -22,7 +22,6 @@ This module is considered “trusted”, that is, it can be installed by non-sup
 The text representation of an `hstore`, used for input and output, includes zero or more _`key`_ `=>` _`value`_ pairs separated by commas. Some examples:
 
 ```
-
 k => v
 foo => bar, baz => whatever
 "1-a" => "anything at all"
@@ -33,7 +32,6 @@ The order of the pairs is not significant (and may not be reproduced on output).
 Each key in an `hstore` is unique. If you declare an `hstore` with duplicate keys, only one will be stored in the `hstore` and there is no guarantee as to which will be kept:
 
 ```
-
 SELECT 'a=>1,a=>2'::hstore;
   hstore
 ----------
@@ -43,7 +41,6 @@ SELECT 'a=>1,a=>2'::hstore;
 A value (but not a key) can be an SQL `NULL`. For example:
 
 ```
-
 key => NULL
 ```
 
@@ -65,15 +62,15 @@ The operators provided by the `hstore` module are shown in [Table F.7](hstore#H
 
 **Table F.7. `hstore` Operators**
 
-<figure class="table-wrapper">
-<table class="table" summary="hstore Operators" border="1">
+<figure className="table-wrapper">
+<table className="table" summary="hstore Operators" border="1">
   <colgroup>
     <col />
   </colgroup>
   <thead>
     <tr>
-      <th class="func_table_entry">
-        <div class="func_signature">Operator</div>
+      <th className="func_table_entry">
+        <div className="func_signature">Operator</div>
         <div>Description</div>
         <div>Example(s)</div>
       </th>
@@ -81,193 +78,193 @@ The operators provided by the `hstore` module are shown in [Table F.7](hstore#H
   </thead>
   <tbody>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">-&gt;</code>
-          <code class="type">text</code> → <code class="returnvalue">text</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">-&gt;</code>
+          <code className="type">text</code> → <code className="returnvalue">text</code>
         </div>
         <div>
-          Returns value associated with given key, or <code class="literal">NULL</code> if not
+          Returns value associated with given key, or <code className="literal">NULL</code> if not
           present.
         </div>
         <div>
-          <code class="literal">'a=&gt;x, b=&gt;y'::hstore -&gt; 'a'</code>
-          → <code class="returnvalue">x</code>
+          <code className="literal">'a=&gt;x, b=&gt;y'::hstore -&gt; 'a'</code>
+          → <code className="returnvalue">x</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">-&gt;</code>
-          <code class="type">text[]</code> → <code class="returnvalue">text[]</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">-&gt;</code>
+          <code className="type">text[]</code> → <code className="returnvalue">text[]</code>
         </div>
         <div>
-          Returns values associated with given keys, or <code class="literal">NULL</code>
+          Returns values associated with given keys, or <code className="literal">NULL</code>
           if not present.
         </div>
         <div>
-          <code class="literal">'a=&gt;x, b=&gt;y, c=&gt;z'::hstore -&gt; ARRAY['c','a']</code>
-          → <code class="returnvalue">\{"z","x"}</code>
+          <code className="literal">'a=&gt;x, b=&gt;y, c=&gt;z'::hstore -&gt; ARRAY['c','a']</code>
+          → <code className="returnvalue">\{"z","x"}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">||</code>
-          <code class="type">hstore</code> → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">||</code>
+          <code className="type">hstore</code> → <code className="returnvalue">hstore</code>
         </div>
-        <div>Concatenates two <code class="type">hstore</code>s.</div>
+        <div>Concatenates two <code className="type">hstore</code>s.</div>
         <div>
-          <code class="literal">'a=&gt;b, c=&gt;d'::hstore || 'c=&gt;x, d=&gt;q'::hstore</code>
-          → <code class="returnvalue">"a"=&gt;"b", "c"=&gt;"x", "d"=&gt;"q"</code>
+          <code className="literal">'a=&gt;b, c=&gt;d'::hstore || 'c=&gt;x, d=&gt;q'::hstore</code>
+          → <code className="returnvalue">"a"=&gt;"b", "c"=&gt;"x", "d"=&gt;"q"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">?</code>
-          <code class="type">text</code> → <code class="returnvalue">boolean</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">?</code>
+          <code className="type">text</code> → <code className="returnvalue">boolean</code>
         </div>
-        <div>Does <code class="type">hstore</code> contain key?</div>
+        <div>Does <code className="type">hstore</code> contain key?</div>
         <div>
-          <code class="literal">'a=&gt;1'::hstore ? 'a'</code>
-          → <code class="returnvalue">t</code>
+          <code className="literal">'a=&gt;1'::hstore ? 'a'</code>
+          → <code className="returnvalue">t</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">?&amp;</code>
-          <code class="type">text[]</code> → <code class="returnvalue">boolean</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">?&amp;</code>
+          <code className="type">text[]</code> → <code className="returnvalue">boolean</code>
         </div>
-        <div>Does <code class="type">hstore</code> contain all the specified keys?</div>
+        <div>Does <code className="type">hstore</code> contain all the specified keys?</div>
         <div>
-          <code class="literal">'a=&gt;1,b=&gt;2'::hstore ?&amp; ARRAY['a','b']</code>
-          → <code class="returnvalue">t</code>
+          <code className="literal">'a=&gt;1,b=&gt;2'::hstore ?&amp; ARRAY['a','b']</code>
+          → <code className="returnvalue">t</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">?|</code>
-          <code class="type">text[]</code> → <code class="returnvalue">boolean</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">?|</code>
+          <code className="type">text[]</code> → <code className="returnvalue">boolean</code>
         </div>
-        <div>Does <code class="type">hstore</code> contain any of the specified keys?</div>
+        <div>Does <code className="type">hstore</code> contain any of the specified keys?</div>
         <div>
-          <code class="literal">'a=&gt;1,b=&gt;2'::hstore ?| ARRAY['b','c']</code>
-          → <code class="returnvalue">t</code>
+          <code className="literal">'a=&gt;1,b=&gt;2'::hstore ?| ARRAY['b','c']</code>
+          → <code className="returnvalue">t</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">@&gt;</code>
-          <code class="type">hstore</code> → <code class="returnvalue">boolean</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">@&gt;</code>
+          <code className="type">hstore</code> → <code className="returnvalue">boolean</code>
         </div>
         <div>Does left operand contain right?</div>
         <div>
-          <code class="literal">'a=&gt;b, b=&gt;1, c=&gt;NULL'::hstore @&gt; 'b=&gt;1'</code>
-          → <code class="returnvalue">t</code>
+          <code className="literal">'a=&gt;b, b=&gt;1, c=&gt;NULL'::hstore @&gt; 'b=&gt;1'</code>
+          → <code className="returnvalue">t</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">&lt;@</code>
-          <code class="type">hstore</code> → <code class="returnvalue">boolean</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">&lt;@</code>
+          <code className="type">hstore</code> → <code className="returnvalue">boolean</code>
         </div>
         <div>Is left operand contained in right?</div>
         <div>
-          <code class="literal">'a=&gt;c'::hstore &lt;@ 'a=&gt;b, b=&gt;1, c=&gt;NULL'</code>
-          → <code class="returnvalue">f</code>
+          <code className="literal">'a=&gt;c'::hstore &lt;@ 'a=&gt;b, b=&gt;1, c=&gt;NULL'</code>
+          → <code className="returnvalue">f</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">-</code>
-          <code class="type">text</code> → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">-</code>
+          <code className="type">text</code> → <code className="returnvalue">hstore</code>
         </div>
         <div>Deletes key from left operand.</div>
         <div>
-          <code class="literal">'a=&gt;1, b=&gt;2, c=&gt;3'::hstore - 'b'::text</code>
-          → <code class="returnvalue">"a"=&gt;"1", "c"=&gt;"3"</code>
+          <code className="literal">'a=&gt;1, b=&gt;2, c=&gt;3'::hstore - 'b'::text</code>
+          → <code className="returnvalue">"a"=&gt;"1", "c"=&gt;"3"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">-</code>
-          <code class="type">text[]</code> → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">-</code>
+          <code className="type">text[]</code> → <code className="returnvalue">hstore</code>
         </div>
         <div>Deletes keys from left operand.</div>
         <div>
-          <code class="literal">'a=&gt;1, b=&gt;2, c=&gt;3'::hstore - ARRAY['a','b']</code>
-          → <code class="returnvalue">"c"=&gt;"3"</code>
+          <code className="literal">'a=&gt;1, b=&gt;2, c=&gt;3'::hstore - ARRAY['a','b']</code>
+          → <code className="returnvalue">"c"=&gt;"3"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">hstore</code> <code class="literal">-</code>
-          <code class="type">hstore</code> → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">hstore</code> <code className="literal">-</code>
+          <code className="type">hstore</code> → <code className="returnvalue">hstore</code>
         </div>
         <div>Deletes pairs from left operand that match pairs in the right operand.</div>
         <div>
-          <code class="literal">'a=&gt;1, b=&gt;2, c=&gt;3'::hstore - 'a=&gt;4, b=&gt;2'::hstore</code>
-          → <code class="returnvalue">"a"=&gt;"1", "c"=&gt;"3"</code>
+          <code className="literal">'a=&gt;1, b=&gt;2, c=&gt;3'::hstore - 'a=&gt;4, b=&gt;2'::hstore</code>
+          → <code className="returnvalue">"a"=&gt;"1", "c"=&gt;"3"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="type">anyelement</code> <code class="literal">#=</code>
-          <code class="type">hstore</code> → <code class="returnvalue">anyelement</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="type">anyelement</code> <code className="literal">#=</code>
+          <code className="type">hstore</code> → <code className="returnvalue">anyelement</code>
         </div>
         <div>
           Replaces fields in the left operand (which must be a composite type) with matching values
-          from <code class="type">hstore</code>.
+          from <code className="type">hstore</code>.
         </div>
         <div>
-          <code class="literal">ROW(1,3) #= 'f1=&gt;11'::hstore</code>
-          → <code class="returnvalue">(11,3)</code>
+          <code className="literal">ROW(1,3) #= 'f1=&gt;11'::hstore</code>
+          → <code className="returnvalue">(11,3)</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="literal">%%</code> <code class="type">hstore</code> →
-          <code class="returnvalue">text[]</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="literal">%%</code> <code className="type">hstore</code> →
+          <code className="returnvalue">text[]</code>
         </div>
-        <div>Converts <code class="type">hstore</code> to an array of alternating keys and values.</div>
+        <div>Converts <code className="type">hstore</code> to an array of alternating keys and values.</div>
         <div>
-          <code class="literal">%% 'a=&gt;foo, b=&gt;bar'::hstore</code>
-          → <code class="returnvalue">\{a,foo,b,bar}</code>
+          <code className="literal">%% 'a=&gt;foo, b=&gt;bar'::hstore</code>
+          → <code className="returnvalue">\{a,foo,b,bar}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="literal">%#</code> <code class="type">hstore</code> →
-          <code class="returnvalue">text[]</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="literal">%#</code> <code className="type">hstore</code> →
+          <code className="returnvalue">text[]</code>
         </div>
-        <div>Converts <code class="type">hstore</code> to a two-dimensional key/value array.</div>
+        <div>Converts <code className="type">hstore</code> to a two-dimensional key/value array.</div>
         <div>
-          <code class="literal">%# 'a=&gt;foo, b=&gt;bar'::hstore</code>
-          → <code class="returnvalue">\{\{a,foo},\{b,bar}}</code>
+          <code className="literal">%# 'a=&gt;foo, b=&gt;bar'::hstore</code>
+          → <code className="returnvalue">\{\{a,foo},\{b,bar}}</code>
         </div>
       </td>
     </tr>
@@ -279,15 +276,15 @@ The operators provided by the `hstore` module are shown in [Table F.7](hstore#H
 
 **Table F.8. `hstore` Functions**
 
-<figure class="table-wrapper">
-<table class="table" summary="hstore Functions" border="1">
+<figure className="table-wrapper">
+<table className="table" summary="hstore Functions" border="1">
   <colgroup>
     <col />
   </colgroup>
   <thead>
     <tr>
-      <th class="func_table_entry">
-        <div class="func_signature">Function</div>
+      <th className="func_table_entry">
+        <div className="func_signature">Function</div>
         <div>Description</div>
         <div>Example(s)</div>
       </th>
@@ -295,377 +292,377 @@ The operators provided by the `hstore` module are shown in [Table F.7](hstore#H
   </thead>
   <tbody>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.1.1.1.1" class="indexterm"></a>
-          <code class="function">hstore</code> ( <code class="type">record</code> ) →
-          <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.1.1.1.1" className="indexterm"></a>
+          <code className="function">hstore</code> ( <code className="type">record</code> ) →
+          <code className="returnvalue">hstore</code>
         </div>
-        <div>Constructs an <code class="type">hstore</code> from a record or row.</div>
+        <div>Constructs an <code className="type">hstore</code> from a record or row.</div>
         <div>
-          <code class="literal">hstore(ROW(1,2))</code>
-          → <code class="returnvalue">"f1"=&gt;"1", "f2"=&gt;"2"</code>
+          <code className="literal">hstore(ROW(1,2))</code>
+          → <code className="returnvalue">"f1"=&gt;"1", "f2"=&gt;"2"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="function">hstore</code> ( <code class="type">text[]</code> ) →
-          <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="function">hstore</code> ( <code className="type">text[]</code> ) →
+          <code className="returnvalue">hstore</code>
         </div>
         <div>
-          Constructs an <code class="type">hstore</code> from an array, which may be either a
+          Constructs an <code className="type">hstore</code> from an array, which may be either a
           key/value array, or a two-dimensional array.
         </div>
         <div>
-          <code class="literal">hstore(ARRAY['a','1','b','2'])</code>
-          → <code class="returnvalue">"a"=&gt;"1", "b"=&gt;"2"</code>
+          <code className="literal">hstore(ARRAY['a','1','b','2'])</code>
+          → <code className="returnvalue">"a"=&gt;"1", "b"=&gt;"2"</code>
         </div>
         <div>
-          <code class="literal">hstore(ARRAY[['c','3'],['d','4']])</code>
-          → <code class="returnvalue">"c"=&gt;"3", "d"=&gt;"4"</code>
+          <code className="literal">hstore(ARRAY[['c','3'],['d','4']])</code>
+          → <code className="returnvalue">"c"=&gt;"3", "d"=&gt;"4"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="function">hstore</code> ( <code class="type">text[]</code>,
-          <code class="type">text[]</code> ) → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="function">hstore</code> ( <code className="type">text[]</code>,
+          <code className="type">text[]</code> ) → <code className="returnvalue">hstore</code>
         </div>
-        <div>Constructs an <code class="type">hstore</code> from separate key and value arrays.</div>
+        <div>Constructs an <code className="type">hstore</code> from separate key and value arrays.</div>
         <div>
-          <code class="literal">hstore(ARRAY['a','b'], ARRAY['1','2'])</code>
-          → <code class="returnvalue">"a"=&gt;"1", "b"=&gt;"2"</code>
+          <code className="literal">hstore(ARRAY['a','b'], ARRAY['1','2'])</code>
+          → <code className="returnvalue">"a"=&gt;"1", "b"=&gt;"2"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="function">hstore</code> ( <code class="type">text</code>,
-          <code class="type">text</code> ) → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="function">hstore</code> ( <code className="type">text</code>,
+          <code className="type">text</code> ) → <code className="returnvalue">hstore</code>
         </div>
-        <div>Makes a single-item <code class="type">hstore</code>.</div>
+        <div>Makes a single-item <code className="type">hstore</code>.</div>
         <div>
-          <code class="literal">hstore('a', 'b')</code>
-          → <code class="returnvalue">"a"=&gt;"b"</code>
+          <code className="literal">hstore('a', 'b')</code>
+          → <code className="returnvalue">"a"=&gt;"b"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.5.1.1.1" class="indexterm"></a>
-          <code class="function">akeys</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">text[]</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.5.1.1.1" className="indexterm"></a>
+          <code className="function">akeys</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">text[]</code>
         </div>
-        <div>Extracts an <code class="type">hstore</code>'s keys as an array.</div>
+        <div>Extracts an <code className="type">hstore</code>'s keys as an array.</div>
         <div>
-          <code class="literal">akeys('a=&gt;1,b=&gt;2')</code>
-          → <code class="returnvalue">\{a,b}</code>
+          <code className="literal">akeys('a=&gt;1,b=&gt;2')</code>
+          → <code className="returnvalue">\{a,b}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.6.1.1.1" class="indexterm"></a>
-          <code class="function">skeys</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">setof text</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.6.1.1.1" className="indexterm"></a>
+          <code className="function">skeys</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">setof text</code>
         </div>
-        <div>Extracts an <code class="type">hstore</code>'s keys as a set.</div>
+        <div>Extracts an <code className="type">hstore</code>'s keys as a set.</div>
         <div>
-          <code class="literal">skeys('a=&gt;1,b=&gt;2')</code>
-          → <code class="returnvalue"></code>
+          <code className="literal">skeys('a=&gt;1,b=&gt;2')</code>
+          → <code className="returnvalue"></code>
         </div><div>
-        <pre class="programlisting">
+        <code className="programlisting">
 a
 b
-</pre>
+</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.7.1.1.1" class="indexterm"></a>
-          <code class="function">avals</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">text[]</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.7.1.1.1" className="indexterm"></a>
+          <code className="function">avals</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">text[]</code>
         </div>
-        <div>Extracts an <code class="type">hstore</code>'s values as an array.</div>
+        <div>Extracts an <code className="type">hstore</code>'s values as an array.</div>
         <div>
-          <code class="literal">avals('a=&gt;1,b=&gt;2')</code>
-          → <code class="returnvalue">\{1,2}</code>
+          <code className="literal">avals('a=&gt;1,b=&gt;2')</code>
+          → <code className="returnvalue">\{1,2}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.8.1.1.1" class="indexterm"></a>
-          <code class="function">svals</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">setof text</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.8.1.1.1" className="indexterm"></a>
+          <code className="function">svals</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">setof text</code>
         </div>
-        <div>Extracts an <code class="type">hstore</code>'s values as a set.</div>
+        <div>Extracts an <code className="type">hstore</code>'s values as a set.</div>
         <div>
-          <code class="literal">svals('a=&gt;1,b=&gt;2')</code>
-          → <code class="returnvalue"></code>
+          <code className="literal">svals('a=&gt;1,b=&gt;2')</code>
+          → <code className="returnvalue"></code>
         </div><div>
-        <pre class="programlisting">
+        <code className="programlisting">
 1
 2
-</pre>
+</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.9.1.1.1" class="indexterm"></a>
-          <code class="function">hstore_to_array</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">text[]</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.9.1.1.1" className="indexterm"></a>
+          <code className="function">hstore_to_array</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">text[]</code>
         </div>
         <div>
-          Extracts an <code class="type">hstore</code>'s keys and values as an array of alternating
+          Extracts an <code className="type">hstore</code>'s keys and values as an array of alternating
           keys and values.
         </div>
         <div>
-          <code class="literal">hstore_to_array('a=&gt;1,b=&gt;2')</code>
-          → <code class="returnvalue">\{a,1,b,2}</code>
+          <code className="literal">hstore_to_array('a=&gt;1,b=&gt;2')</code>
+          → <code className="returnvalue">\{a,1,b,2}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.10.1.1.1" class="indexterm"></a>
-          <code class="function">hstore_to_matrix</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">text[]</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.10.1.1.1" className="indexterm"></a>
+          <code className="function">hstore_to_matrix</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">text[]</code>
         </div>
         <div>
-          Extracts an <code class="type">hstore</code>'s keys and values as a two-dimensional array.
+          Extracts an <code className="type">hstore</code>'s keys and values as a two-dimensional array.
         </div>
         <div>
-          <code class="literal">hstore_to_matrix('a=&gt;1,b=&gt;2')</code>
-          → <code class="returnvalue">\{\{a,1},\{b,2}}</code>
+          <code className="literal">hstore_to_matrix('a=&gt;1,b=&gt;2')</code>
+          → <code className="returnvalue">\{\{a,1},\{b,2}}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.11.1.1.1" class="indexterm"></a>
-          <code class="function">hstore_to_json</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">json</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.11.1.1.1" className="indexterm"></a>
+          <code className="function">hstore_to_json</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">json</code>
         </div>
         <div>
-          Converts an <code class="type">hstore</code> to a <code class="type">json</code> value,
+          Converts an <code className="type">hstore</code> to a <code className="type">json</code> value,
           converting all non-null values to JSON strings.
         </div>
         <div>
-          This function is used implicitly when an <code class="type">hstore</code> value is cast to
-          <code class="type">json</code>.
+          This function is used implicitly when an <code className="type">hstore</code> value is cast to
+          <code className="type">json</code>.
         </div>
         <div>
-          <code class="literal">hstore_to_json('"a key"=&gt;1, b=&gt;t, c=&gt;null, d=&gt;12345, e=&gt;012345,
+          <code className="literal">hstore_to_json('"a key"=&gt;1, b=&gt;t, c=&gt;null, d=&gt;12345, e=&gt;012345,
             f=&gt;1.234, g=&gt;2.345e+4')</code>
           →
-          <code class="returnvalue">\{"a key": "1", "b": "t", "c": null, "d": "12345", "e": "012345", "f": "1.234", "g":
+          <code className="returnvalue">\{"a key": "1", "b": "t", "c": null, "d": "12345", "e": "012345", "f": "1.234", "g":
             "2.345e+4"}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.12.1.1.1" class="indexterm"></a>
-          <code class="function">hstore_to_jsonb</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">jsonb</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.12.1.1.1" className="indexterm"></a>
+          <code className="function">hstore_to_jsonb</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">jsonb</code>
         </div>
         <div>
-          Converts an <code class="type">hstore</code> to a <code class="type">jsonb</code> value,
+          Converts an <code className="type">hstore</code> to a <code className="type">jsonb</code> value,
           converting all non-null values to JSON strings.
         </div>
         <div>
-          This function is used implicitly when an <code class="type">hstore</code> value is cast to
-          <code class="type">jsonb</code>.
+          This function is used implicitly when an <code className="type">hstore</code> value is cast to
+          <code className="type">jsonb</code>.
         </div>
         <div>
-          <code class="literal">hstore_to_jsonb('"a key"=&gt;1, b=&gt;t, c=&gt;null, d=&gt;12345, e=&gt;012345,
+          <code className="literal">hstore_to_jsonb('"a key"=&gt;1, b=&gt;t, c=&gt;null, d=&gt;12345, e=&gt;012345,
             f=&gt;1.234, g=&gt;2.345e+4')</code>
           →
-          <code class="returnvalue">\{"a key": "1", "b": "t", "c": null, "d": "12345", "e": "012345", "f": "1.234", "g":
+          <code className="returnvalue">\{"a key": "1", "b": "t", "c": null, "d": "12345", "e": "012345", "f": "1.234", "g":
             "2.345e+4"}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.13.1.1.1" class="indexterm"></a>
-          <code class="function">hstore_to_json_loose</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">json</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.13.1.1.1" className="indexterm"></a>
+          <code className="function">hstore_to_json_loose</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">json</code>
         </div>
         <div>
-          Converts an <code class="type">hstore</code> to a <code class="type">json</code> value,
+          Converts an <code className="type">hstore</code> to a <code className="type">json</code> value,
           but attempts to distinguish numerical and Boolean values so they are unquoted in the JSON.
         </div>
         <div>
-          <code class="literal">hstore_to_json_loose('"a key"=&gt;1, b=&gt;t, c=&gt;null, d=&gt;12345, e=&gt;012345,
+          <code className="literal">hstore_to_json_loose('"a key"=&gt;1, b=&gt;t, c=&gt;null, d=&gt;12345, e=&gt;012345,
             f=&gt;1.234, g=&gt;2.345e+4')</code>
           →
-          <code class="returnvalue">\{"a key": 1, "b": true, "c": null, "d": 12345, "e": "012345", "f": 1.234, "g":
+          <code className="returnvalue">\{"a key": 1, "b": true, "c": null, "d": 12345, "e": "012345", "f": 1.234, "g":
             2.345e+4}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.14.1.1.1" class="indexterm"></a>
-          <code class="function">hstore_to_jsonb_loose</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">jsonb</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.14.1.1.1" className="indexterm"></a>
+          <code className="function">hstore_to_jsonb_loose</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">jsonb</code>
         </div>
         <div>
-          Converts an <code class="type">hstore</code> to a <code class="type">jsonb</code> value,
+          Converts an <code className="type">hstore</code> to a <code className="type">jsonb</code> value,
           but attempts to distinguish numerical and Boolean values so they are unquoted in the JSON.
         </div>
         <div>
-          <code class="literal">hstore_to_jsonb_loose('"a key"=&gt;1, b=&gt;t, c=&gt;null, d=&gt;12345, e=&gt;012345,
+          <code className="literal">hstore_to_jsonb_loose('"a key"=&gt;1, b=&gt;t, c=&gt;null, d=&gt;12345, e=&gt;012345,
             f=&gt;1.234, g=&gt;2.345e+4')</code>
           →
-          <code class="returnvalue">\{"a key": 1, "b": true, "c": null, "d": 12345, "e": "012345", "f": 1.234, "g":
+          <code className="returnvalue">\{"a key": 1, "b": true, "c": null, "d": 12345, "e": "012345", "f": 1.234, "g":
             2.345e+4}</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.15.1.1.1" class="indexterm"></a>
-          <code class="function">slice</code> ( <code class="type">hstore</code>,
-          <code class="type">text[]</code> ) → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.15.1.1.1" className="indexterm"></a>
+          <code className="function">slice</code> ( <code className="type">hstore</code>,
+          <code className="type">text[]</code> ) → <code className="returnvalue">hstore</code>
         </div>
         <div>
-          Extracts a subset of an <code class="type">hstore</code> containing only the specified
+          Extracts a subset of an <code className="type">hstore</code> containing only the specified
           keys.
         </div>
         <div>
-          <code class="literal">slice('a=&gt;1,b=&gt;2,c=&gt;3'::hstore, ARRAY['b','c','x'])</code>
-          → <code class="returnvalue">"b"=&gt;"2", "c"=&gt;"3"</code>
+          <code className="literal">slice('a=&gt;1,b=&gt;2,c=&gt;3'::hstore, ARRAY['b','c','x'])</code>
+          → <code className="returnvalue">"b"=&gt;"2", "c"=&gt;"3"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.16.1.1.1" class="indexterm"></a>
-          <code class="function">each</code> ( <code class="type">hstore</code> ) →
-          <code class="returnvalue">setof record</code> (
-          <em class="parameter"><code>key</code></em> <code class="type">text</code>,
-          <em class="parameter"><code>value</code></em> <code class="type">text</code> )
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.16.1.1.1" className="indexterm"></a>
+          <code className="function">each</code> ( <code className="type">hstore</code> ) →
+          <code className="returnvalue">setof record</code> (
+          <em className="parameter"><code>key</code></em> <code className="type">text</code>,
+          <em className="parameter"><code>value</code></em> <code className="type">text</code> )
         </div>
-        <div>Extracts an <code class="type">hstore</code>'s keys and values as a set of records.</div>
+        <div>Extracts an <code className="type">hstore</code>'s keys and values as a set of records.</div>
         <div>
-          <code class="literal">select * from each('a=&gt;1,b=&gt;2')</code>
-          → <code class="returnvalue"></code>
+          <code className="literal">select * from each('a=&gt;1,b=&gt;2')</code>
+          → <code className="returnvalue"></code>
         </div><div>
-        <pre class="programlisting">
+        <code className="programlisting">
  key | value
 -----+-------
  a   | 1
  b   | 2
-</pre>
+</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.17.1.1.1" class="indexterm"></a>
-          <code class="function">exist</code> ( <code class="type">hstore</code>,
-          <code class="type">text</code> ) → <code class="returnvalue">boolean</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.17.1.1.1" className="indexterm"></a>
+          <code className="function">exist</code> ( <code className="type">hstore</code>,
+          <code className="type">text</code> ) → <code className="returnvalue">boolean</code>
         </div>
-        <div>Does <code class="type">hstore</code> contain key?</div>
+        <div>Does <code className="type">hstore</code> contain key?</div>
         <div>
-          <code class="literal">exist('a=&gt;1', 'a')</code>
-          → <code class="returnvalue">t</code>
+          <code className="literal">exist('a=&gt;1', 'a')</code>
+          → <code className="returnvalue">t</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.18.1.1.1" class="indexterm"></a>
-          <code class="function">defined</code> ( <code class="type">hstore</code>,
-          <code class="type">text</code> ) → <code class="returnvalue">boolean</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.18.1.1.1" className="indexterm"></a>
+          <code className="function">defined</code> ( <code className="type">hstore</code>,
+          <code className="type">text</code> ) → <code className="returnvalue">boolean</code>
         </div>
         <div>
-          Does <code class="type">hstore</code> contain a non-<code class="literal">NULL</code>
+          Does <code className="type">hstore</code> contain a non-<code className="literal">NULL</code>
           value for key?
         </div>
         <div>
-          <code class="literal">defined('a=&gt;NULL', 'a')</code>
-          → <code class="returnvalue">f</code>
+          <code className="literal">defined('a=&gt;NULL', 'a')</code>
+          → <code className="returnvalue">f</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.19.1.1.1" class="indexterm"></a>
-          <code class="function">delete</code> ( <code class="type">hstore</code>,
-          <code class="type">text</code> ) → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.19.1.1.1" className="indexterm"></a>
+          <code className="function">delete</code> ( <code className="type">hstore</code>,
+          <code className="type">text</code> ) → <code className="returnvalue">hstore</code>
         </div>
         <div>Deletes pair with matching key.</div>
         <div>
-          <code class="literal">delete('a=&gt;1,b=&gt;2', 'b')</code>
-          → <code class="returnvalue">"a"=&gt;"1"</code>
+          <code className="literal">delete('a=&gt;1,b=&gt;2', 'b')</code>
+          → <code className="returnvalue">"a"=&gt;"1"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="function">delete</code> ( <code class="type">hstore</code>,
-          <code class="type">text[]</code> ) → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="function">delete</code> ( <code className="type">hstore</code>,
+          <code className="type">text[]</code> ) → <code className="returnvalue">hstore</code>
         </div>
         <div>Deletes pairs with matching keys.</div>
         <div>
-          <code class="literal">delete('a=&gt;1,b=&gt;2,c=&gt;3', ARRAY['a','b'])</code>
-          → <code class="returnvalue">"c"=&gt;"3"</code>
+          <code className="literal">delete('a=&gt;1,b=&gt;2,c=&gt;3', ARRAY['a','b'])</code>
+          → <code className="returnvalue">"c"=&gt;"3"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <code class="function">delete</code> ( <code class="type">hstore</code>,
-          <code class="type">hstore</code> ) → <code class="returnvalue">hstore</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <code className="function">delete</code> ( <code className="type">hstore</code>,
+          <code className="type">hstore</code> ) → <code className="returnvalue">hstore</code>
         </div>
         <div>Deletes pairs matching those in the second argument.</div>
         <div>
-          <code class="literal">delete('a=&gt;1,b=&gt;2', 'a=&gt;4,b=&gt;2'::hstore)</code>
-          → <code class="returnvalue">"a"=&gt;"1"</code>
+          <code className="literal">delete('a=&gt;1,b=&gt;2', 'a=&gt;4,b=&gt;2'::hstore)</code>
+          → <code className="returnvalue">"a"=&gt;"1"</code>
         </div>
       </td>
     </tr>
     <tr>
-      <td class="func_table_entry">
-        <div class="func_signature">
-          <a id="id-1.11.7.28.6.4.2.2.22.1.1.1" class="indexterm"></a>
-          <code class="function">populate_record</code> ( <code class="type">anyelement</code>,
-          <code class="type">hstore</code> ) → <code class="returnvalue">anyelement</code>
+      <td className="func_table_entry">
+        <div className="func_signature">
+          <a id="id-1.11.7.28.6.4.2.2.22.1.1.1" className="indexterm"></a>
+          <code className="function">populate_record</code> ( <code className="type">anyelement</code>,
+          <code className="type">hstore</code> ) → <code className="returnvalue">anyelement</code>
         </div>
         <div>
           Replaces fields in the left operand (which must be a composite type) with matching values
-          from <code class="type">hstore</code>.
+          from <code className="type">hstore</code>.
         </div>
         <div>
-          <code class="literal">populate_record(ROW(1,2), 'f1=&gt;42'::hstore)</code>
-          → <code class="returnvalue">(42,2)</code>
+          <code className="literal">populate_record(ROW(1,2), 'f1=&gt;42'::hstore)</code>
+          → <code className="returnvalue">(42,2)</code>
         </div>
       </td>
     </tr>
@@ -905,6 +902,3 @@ Oleg Bartunov `<oleg@sai.msu.su>`, Moscow, Moscow University, Russia
 Teodor Sigaev `<teodor@sigaev.ru>`, Moscow, Delta-Soft Ltd., Russia
 
 Additional enhancements by Andrew Gierth `<andrew@tao11.riddles.org.uk>`, United Kingdom
-
-```
-````

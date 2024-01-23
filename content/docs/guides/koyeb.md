@@ -54,18 +54,18 @@ The example application exposes a `/planets` endpoint that you can use to list p
 
 ```json
 [
-{
-    "id": 1,
-    "name": "Mercury"
-},
-{
-    "id": 2,
-    "name": "Venus"
-},
-{
-    "id": 3,
-    "name": "Mars"
-}
+    {
+        "id": 1,
+        "name": "Mercury"
+    },
+    {
+        "id": 2,
+        "name": "Venus"
+    },
+    {
+        "id": 3,
+        "name": "Mars"
+    }
 ]
 ```
 
@@ -110,18 +110,18 @@ The example application exposes a `/planets` endpoint that you can use to list p
 
 ```json
 [
-{
-    "id": 1,
-    "name": "Mercury"
-},
-{
-    "id": 2,
-    "name": "Venus"
-},
-{
-    "id": 3,
-    "name": "Mars"
-}
+    {
+        "id": 1,
+        "name": "Mercury"
+    },
+    {
+        "id": 2,
+        "name": "Venus"
+    },
+    {
+        "id": 3,
+        "name": "Mars"
+    }
 ]
 ```
 

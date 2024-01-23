@@ -24,8 +24,12 @@ function extractTextFromNode(node) {
     return extractTextFromNode(node.props.children);
   }
 
-  if (node.props && node.props.dangerouslySetInnerHTML) {
-    const html = node.props.dangerouslySetInnerHTML.__html;
+  if (node?.props && node?.props?.dangerouslySetInnerHTML) {
+    const html = node.props.dangerouslySetInnerHTML?.__html;
+
+    if (!html) {
+      return '';
+    }
 
     const convertedHtml = html
       ?.replace(/<[^>]*>?/gm, '')
