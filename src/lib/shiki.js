@@ -12,13 +12,13 @@ const parseHighlightLines = (meta) => {
     highlightLines = highlightStringArray.reduce((result, item) => {
       if (item.includes('-')) {
         const range = item.split('-');
-        const start = parseInt(range[0]);
-        const end = parseInt(range[1]);
+        const start = parseInt(range[0], 10);
+        const end = parseInt(range[1], 10);
         for (let i = start; i <= end; i++) {
           result.push(i);
         }
       } else {
-        result.push(parseInt(item));
+        result.push(parseInt(item, 10));
       }
       return result;
     }, []);
@@ -59,7 +59,7 @@ export default async function highlight(code, lang = 'bash', meta = '', theme = 
 
   const highlightLines = parseHighlightLines(meta);
 
-  const tokens = highlighter.codeToThemedTokens(code, lang, theme, {
+  const tokens = highlighter?.codeToThemedTokens(code, lang, theme, {
     includeExplanation: false,
   });
 
