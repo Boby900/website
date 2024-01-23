@@ -217,22 +217,16 @@ You can use fenced code blocks with three backticks (```) on the lines before an
 
   ````
 
-To display code with options, wrap your code with `<CodeBlock></CodeBlock>` component.
-
-Right now, `<CodeBlock>` accepts only:
-
 - `shouldWrap` - flag to enable code wrapping in the code block.
 
   Example:
 
     ````md
-    <CodeBlock shouldWrap>
 
-    ```powershell
+    ```powershell shouldWrap
     powershell -Command "Start-Process -FilePath powershell -Verb RunAs -ArgumentList '-NoProfile','-InputFormat None','-ExecutionPolicy Bypass','-Command ""iex (iwr -UseBasicParsing https://cli.configu.com/install.ps1)""'"
     ```
 
-    </CodeBlock>
     ````
 
 ## Code Tabs
